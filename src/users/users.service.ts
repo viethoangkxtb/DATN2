@@ -5,6 +5,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {User} from './schemas/user.schema';
 import {Model} from 'mongoose';
 import {genSaltSync, hashSync} from 'bcryptjs';
+import {retry} from 'rxjs';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
@@ -16,17 +17,28 @@ export class UsersService {
     return hash;
   };
 
-  // create(createUserDto: CreateUserDto) {
-  async create(email: string, password: string, name: string) {
-    const hashPassword = this.getHashPassword(password);
+  async create(createUserDto: CreateUserDto) {
+    const hashPassword = this.getHashPassword(createUserDto.password);
 
     let user = await this.userModel.create({
-      email,
+      email: createUserDto.email,
       password: hashPassword,
-      name,
+      name: createUserDto.name,
     });
+
     return user;
   }
+
+  // async create(email: string, password: string, name: string) {
+  //   const hashPassword = this.getHashPassword(password);
+
+  //   let user = await this.userModel.create({
+  //     email,
+  //     password: hashPassword,
+  //     name,
+  //   });
+  //   return user;
+  // }
 
   findAll() {
     return `This action returns all users`;
