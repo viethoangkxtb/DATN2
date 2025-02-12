@@ -1,6 +1,6 @@
-import { Controller, Get, Render } from '@nestjs/common';
-import { AppService } from './app.service';
-import { ConfigService } from '@nestjs/config';
+import {Controller, Get, Render} from '@nestjs/common';
+import {AppService} from './app.service';
+import {ConfigService} from '@nestjs/config';
 
 @Controller()
 export class AppController {
@@ -12,8 +12,6 @@ export class AppController {
   @Get()
   @Render('home')
   handleHomepage() {
-    console.log('>> check port = ', this.configService.get<string>('PORT'));
-
     const message1 = this.appService.getHello();
 
     // return this.appService.getHello();
