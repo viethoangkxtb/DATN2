@@ -83,14 +83,13 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+  async findOne(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id))
       return `User not found`;
-    }
 
-    return this.userModel.findOne({
-      _id: id,
-    });
+    return await this.userModel.findOne({
+      _id: id
+    }).select("-password") //exclude >< include
   }
 
   findOneByUsername(username: string) {
@@ -118,13 +117,20 @@ export class UsersService {
     return updated;
   }
 
-  async remove(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id))
       return `User not found`;
-    }
 
+    await this.userModel.updateOne(
+      { _id: id },
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email
+        }
+      })
     return this.userModel.softDelete({
-      _id: id,
-    });
+      _id: id
+    })
   }
 }
