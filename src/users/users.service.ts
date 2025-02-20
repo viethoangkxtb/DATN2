@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import {compareSync, genSaltSync, hashSync} from 'bcryptjs';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from './user.interface';
-import { User } from 'src/decorator/customize';
+import {User} from 'src/decorator/customize';
 @Injectable()
 export class UsersService {
   constructor(
@@ -22,7 +22,7 @@ export class UsersService {
     return hash;
   };
 
-  async create(createUserDto: CreateUserDto,@User() user: IUser) {
+  async create(createUserDto: CreateUserDto, @User() user: IUser) {
     const {name, email, password, age, gender, address, role, company} =
       createUserDto;
 
@@ -103,11 +103,19 @@ export class UsersService {
     return compareSync(password, hash);
   }
 
-  async update(updateUserDto: UpdateUserDto) {
-    return await this.userModel.updateOne(
+  async update(updateUserDto: UpdateUserDto, user: IUser) {
+    const updated = await this.userModel.updateOne(
       {_id: updateUserDto._id},
-      {...updateUserDto},
+      {
+        ...updateUserDto,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
     );
+
+    return updated;
   }
 
   async remove(id: string) {
