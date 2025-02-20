@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import {UsersService} from './users.service';
 import {CreateUserDto} from './dto/create-user.dto';
@@ -29,8 +30,12 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @ResponseMessage("Fetch user with paginate")
+  findAll(
+    @Query("page") currentPage: string,
+    @Query("limit") limit: string,
+    @Query() qs: string,) {
+    return this.usersService.findAll(+currentPage, +limit, qs);
   }
 
   @Public()
