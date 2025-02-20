@@ -1,5 +1,5 @@
-import {Injectable} from '@nestjs/common';
-import {CreateUserDto} from './dto/create-user.dto';
+import {BadRequestException, Injectable} from '@nestjs/common';
+import {CreateUserDto, RegisterUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {InjectModel} from '@nestjs/mongoose';
 import {User, UserDocument} from './schemas/user.schema';
@@ -32,16 +32,29 @@ export class UsersService {
     return user;
   }
 
-  // async create(email: string, password: string, name: string) {
-  //   const hashPassword = this.getHashPassword(password);
+  async register(user: RegisterUserDto) {
+    const {name, email, password, age, gender, address} = user;
 
-  //   let user = await this.userModel.create({
-  //     email,
-  //     password: hashPassword,
-  //     name,
-  //   });
-  //   return user;
-  // }
+    const isExit = await this.userModel.findOne({email})
+
+    if (isExit) {
+      throw new BadRequestException(`Email: ${email} already exists. Please use another email`)
+    }
+
+    const hashPassword = this.getHashPassword(password);
+
+    let newRegister = await this.userModel.create({
+      name,
+      email,
+      password: hashPassword,
+      age,
+      gender,
+      address,
+      role: 'USER',
+    });
+
+    return newRegister;
+  }
 
   findAll() {
     return `This action returns all users`;

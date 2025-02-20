@@ -31,13 +31,13 @@ export class CreateUserDto {
   age: number;
 
   @IsNotEmpty({message: 'Gender is required'})
-  gender: number;
+  gender: string;
 
   @IsNotEmpty({message: 'Address is required'})
-  address: number;
+  address: string;
 
-  @IsNotEmpty({message: 'Role is required'})
-  role: number;
+  @IsNotEmpty({message: 'Address is required'})
+  role: string;
 
   @IsNotEmptyObject()
   @IsObject()
@@ -61,7 +61,7 @@ export class RegisterUserDto {
   age: number;
 
   @IsNotEmpty({message: 'Gender is required'})
-  gender: number;
+  gender: string;
 
   @IsNotEmpty({message: 'Address is required'})
   address: number;
