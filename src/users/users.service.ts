@@ -81,18 +81,18 @@ export class UsersService {
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population } = aqp(qs);
+    const {filter, sort, population} = aqp(qs);
     delete filter.page;
     delete filter.limit;
 
-    let offset = (+currentPage - 1) * (+limit);
+    let offset = (+currentPage - 1) * +limit;
     let defaultLimit = +limit ? +limit : 10;
 
     const totalItems = (await this.userModel.find(filter)).length;
     const totalPages = Math.ceil(totalItems / defaultLimit);
 
-
-    const result = await this.userModel.find(filter)
+    const result = await this.userModel
+      .find(filter)
       .skip(offset)
       .limit(defaultLimit)
       .sort(sort as any)
@@ -100,26 +100,25 @@ export class UsersService {
       .populate(population)
       .exec();
 
-
     return {
       meta: {
         current: currentPage, //trang hiện tại
         pageSize: limit, //số lượng bản ghi đã lấy
-        pages: totalPages,  //tổng số trang với điều kiện query
-        total: totalItems // tổng số phần tử (số bản ghi)
+        pages: totalPages, //tổng số trang với điều kiện query
+        total: totalItems, // tổng số phần tử (số bản ghi)
       },
-      result //kết quả query
-    }
-
+      result, //kết quả query
+    };
   }
 
   async findOne(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id))
-      return `User not found`;
+    if (!mongoose.Types.ObjectId.isValid(id)) return `User not found`;
 
-    return await this.userModel.findOne({
-      _id: id
-    }).select("-password") //exclude >< include
+    return await this.userModel
+      .findOne({
+        _id: id,
+      })
+      .select('-password'); //exclude >< include
   }
 
   findOneByUsername(username: string) {
@@ -148,19 +147,23 @@ export class UsersService {
   }
 
   async remove(id: string, user: IUser) {
-    if (!mongoose.Types.ObjectId.isValid(id))
-      return `User not found`;
+    if (!mongoose.Types.ObjectId.isValid(id)) return `User not found`;
 
     await this.userModel.updateOne(
-      { _id: id },
+      {_id: id},
       {
         deletedBy: {
           _id: user._id,
-          email: user.email
-        }
-      })
+          email: user.email,
+        },
+      },
+    );
     return this.userModel.softDelete({
-      _id: id
-    })
+      _id: id,
+    });
   }
+
+  updateUserToken = async (refreshToken: string, _id: string) => {
+    return await this.userModel.updateOne({_id}, {refreshToken});
+  };
 }
