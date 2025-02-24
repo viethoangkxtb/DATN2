@@ -97,14 +97,13 @@ export class AuthService {
         const refresh_token = this.createRefreshToken(payload);
 
         // update user with refresh token
-        this.usersService.updateUserToken(refresh_token, _id.toString());
+        await this.usersService.updateUserToken(refresh_token, _id.toString());
 
         // set refresh_token as cookies
-        response.clearCookie('refresh_token')
+        response.clearCookie('refresh_token');
         response.cookie('refresh_token', refresh_token, {
           httpOnly: true,
-          maxAge:
-            ms(this.configService.get<string>('JWT_REFRESH_EXPIRE')),
+          maxAge: ms(this.configService.get<string>('JWT_REFRESH_EXPIRE')),
         });
 
         return {
@@ -126,5 +125,11 @@ export class AuthService {
         `Refresh Token invalid, please login again`,
       );
     }
+  };
+
+  logout = async (user: IUser, response: Response) => {
+    response.clearCookie('refresh_token');
+    await this.usersService.updateUserToken('', user._id);
+    return 'Logged out';
   };
 }
