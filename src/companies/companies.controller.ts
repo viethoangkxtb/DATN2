@@ -18,13 +18,14 @@ import {IUser} from 'src/users/user.interface';
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
+  @ResponseMessage('Create a Company')
   @Post()
   create(@Body() createCompanyDto: CreateCompanyDto, @User() user: IUser) {
     return this.companiesService.create(createCompanyDto, user);
   }
 
+  @ResponseMessage('Fetch list Company with paginate')
   @Get()
-  @ResponseMessage('Fetch List Company with paginate')
   findAll(
     @Query('current') currentPage: string,
     @Query('pageSize') limit: string,
@@ -33,11 +34,13 @@ export class CompaniesController {
     return this.companiesService.findAll(+currentPage, +limit, qs);
   }
 
+  @ResponseMessage('Find a Company')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.companiesService.findOne(id);
   }
 
+  @ResponseMessage('Update a Company')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -47,6 +50,7 @@ export class CompaniesController {
     return this.companiesService.update(id, updateCompanyDto, user);
   }
 
+  @ResponseMessage('Delete a Company')
   @Delete(':id')
   remove(@Param('id') id: string, @User() user: IUser) {
     return this.companiesService.remove(id, user);

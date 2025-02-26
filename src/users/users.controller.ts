@@ -18,8 +18,8 @@ import {IUser} from './user.interface';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
   @ResponseMessage('Create a new User')
+  @Post()
   async create(@Body() createUserDto: CreateUserDto, @User() user: IUser) {
     let newUser = await this.usersService.create(createUserDto, user);
 
@@ -29,8 +29,8 @@ export class UsersController {
     };
   }
 
-  @Get()
   @ResponseMessage("Fetch user with paginate")
+  @Get()
   findAll(
     @Query("current") currentPage: string,
     @Query("pageSize") limit: string,
@@ -39,22 +39,22 @@ export class UsersController {
   }
 
   @Public()
-  @Get(':id')
   @ResponseMessage("Fetch user by id")
+  @Get(':id')
   async findOne(@Param('id') id: string) {
     const foundUser = await this.usersService.findOne(id);
     return foundUser;
   }
 
-  @Patch()
   @ResponseMessage('Update a User')
+  @Patch()
   async update(@Body() updateUserDto: UpdateUserDto, @User() user: IUser) {
     let updateUser = await this.usersService.update(updateUserDto, user)
     return updateUser;
   }
 
-  @Delete(':id')
   @ResponseMessage("Delete a User")
+  @Delete(':id')
   remove(@Param('id') id: string, @User() user: IUser) {
     return this.usersService.remove(id, user);
   }

@@ -11,9 +11,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
+  @ResponseMessage('User login')
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  @ResponseMessage('User login')
   handleLogin(@Req() req, @Res({passthrough: true}) response: Response) {
     return this.authService.login(req.user, response);
   }
