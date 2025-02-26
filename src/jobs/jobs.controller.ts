@@ -39,9 +39,14 @@ export class JobsController {
     return this.jobsService.findOne(id);
   }
 
+  @ResponseMessage('Update a Job')
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
-    return this.jobsService.update(+id, updateJobDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateJobDto: UpdateJobDto,
+    @User() user: IUser,
+  ) {
+    return this.jobsService.update(id, updateJobDto, user);
   }
 
   @Delete(':id')
