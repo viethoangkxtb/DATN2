@@ -79,7 +79,21 @@ export class JobsService {
     return updated;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} job`;
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return `Company not found!`;
+    }
+
+    await this.jobModel.updateOne(
+      {_id: id},
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return this.jobModel.softDelete({_id: id});
   }
 }
