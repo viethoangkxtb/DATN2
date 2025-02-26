@@ -112,7 +112,9 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id)) return `User not found`;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return `User not found`;
+    }
 
     return await this.userModel
       .findOne({
