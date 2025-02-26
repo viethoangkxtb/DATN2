@@ -1,23 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { JobsService } from './jobs.service';
-import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
-import { ResponseMessage, User } from 'src/decorator/customize';
-import { IUser } from 'src/users/user.interface';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
+import {JobsService} from './jobs.service';
+import {CreateJobDto} from './dto/create-job.dto';
+import {UpdateJobDto} from './dto/update-job.dto';
+import {ResponseMessage, User} from 'src/decorator/customize';
+import {IUser} from 'src/users/user.interface';
 
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
-  @ResponseMessage("Create a Job")
+  @ResponseMessage('Create a Job')
   @Post()
   create(@Body() createJobDto: CreateJobDto, @User() user: IUser) {
     return this.jobsService.create(createJobDto, user);
   }
-
+  @ResponseMessage('Fetch Job list with pagination')
   @Get()
-  findAll() {
-    return this.jobsService.findAll();
+  findAll(
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
+    @Query() qs: string,
+  ) {
+    return this.jobsService.findAll(+currentPage, +limit, qs);
   }
 
   @Get(':id')

@@ -24,7 +24,7 @@ export class CompaniesController {
     return this.companiesService.create(createCompanyDto, user);
   }
 
-  @ResponseMessage('Fetch list Company with paginate')
+  @ResponseMessage('Fetch Company list with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,
