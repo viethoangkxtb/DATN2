@@ -36,7 +36,7 @@ export class CreateUserDto {
   @IsNotEmpty({message: 'Address is required'})
   address: string;
 
-  @IsNotEmpty({message: 'Address is required'})
+  @IsNotEmpty({message: 'Role is required'})
   role: string;
 
   @IsNotEmptyObject()
