@@ -15,6 +15,7 @@ export class Job {
   company: {
     _id: mongoose.Schema.Types.ObjectId;
     name: string;
+    logo: string;
   };
 
   @Prop()
@@ -30,16 +31,16 @@ export class Job {
   level: string;
 
   @Prop()
-  description : string;
+  description: string;
 
   @Prop()
-  startDate : Date;
+  startDate: Date;
 
   @Prop()
-  endDate : Date;
+  endDate: Date;
 
   @Prop()
-  isActive : boolean;
+  isActive: boolean;
 
   @Prop({type: Object})
   createdBy: {

@@ -11,11 +11,14 @@ import {
 import mongoose from 'mongoose';
 
 class Company {
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Company _id is required'})
   _id: mongoose.Schema.Types.ObjectId;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Company name is required'})
   name: string;
+
+  @IsNotEmpty({message: 'Company logo is required'})
+  logo: string;
 }
 
 export class CreateJobDto {
@@ -24,7 +27,7 @@ export class CreateJobDto {
 
   @IsNotEmpty({message: 'Skills are required'})
   @IsArray({message: 'Skills are an array'})
-  @IsString({each: true,message: 'Skill is a string'})
+  @IsString({each: true, message: 'Skill is a string'})
   skills: string[];
 
   @IsNotEmptyObject()
