@@ -1,11 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateResumeDto } from './dto/create-resume.dto';
-import { UpdateResumeDto } from './dto/update-resume.dto';
+import {Injectable} from '@nestjs/common';
+import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
+import {UpdateResumeDto} from './dto/update-resume.dto';
+import {IUser} from 'src/users/user.interface';
+import {InjectModel} from '@nestjs/mongoose';
+import {Resume, ResumeDocument} from './schemas/resume.schema';
+import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 
 @Injectable()
 export class ResumesService {
-  create(createResumeDto: CreateResumeDto) {
-    return 'This action adds a new resume';
+  constructor(
+    @InjectModel(Resume.name)
+    private resumeModel: SoftDeleteModel<ResumeDocument>,
+  ) {}
+
+  async create(createUserCvDto: CreateUserCvDto, user: IUser) {
+    const {url, companyId, jobId} = createUserCvDto;
+    const {email, _id} = user;
+
+    const newCv = await this.resumeModel.create({
+      url,
+      companyId,
+      email,
+      jobId,
+      userId: _id,
+      status: 'PENDING',
+      createdBy: {_id, email},
+      history: [
+        {
+          status: 'PENDING',
+          updatedAt: new Date(),
+          updatedBy: {
+            _id: user._id,
+            email: user.email,
+          },
+        },
+      ],
+    });
+
+    return {
+      _id: newCv?._id,
+      createdAt: newCv?.createdAt,
+    };
   }
 
   findAll() {

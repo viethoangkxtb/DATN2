@@ -23,7 +23,7 @@ export class UsersService {
     return hash;
   };
 
-  async create(createUserDto: CreateUserDto, @User() user: IUser) {
+  async create(createUserDto: CreateUserDto, user: IUser) {
     const {name, email, password, age, gender, address, role, company} =
       createUserDto;
 
@@ -149,7 +149,9 @@ export class UsersService {
   }
 
   async remove(id: string, user: IUser) {
-    if (!mongoose.Types.ObjectId.isValid(id)) return `User not found`;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      new BadRequestException(`Not found User with id = ${id}`)
+    }
 
     await this.userModel.updateOne(
       {_id: id},
