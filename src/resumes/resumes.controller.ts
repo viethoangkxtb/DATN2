@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import {ResumesService} from './resumes.service';
 import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
@@ -23,10 +24,15 @@ export class ResumesController {
     return this.resumesService.create(createUserCvDto, user);
   }
 
-  @Get()
-  findAll() {
-    return this.resumesService.findAll();
-  }
+  @ResponseMessage('Fetch Company list with pagination')
+    @Get()
+    findAll(
+      @Query('current') currentPage: string,
+      @Query('pageSize') limit: string,
+      @Query() qs: string,
+    ) {
+      return this.resumesService.findAll(+currentPage, +limit, qs);
+    }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
