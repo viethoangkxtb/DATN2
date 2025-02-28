@@ -40,7 +40,7 @@ export class ResumesController {
     return this.resumesService.findOne(id);
   }
 
-  @ResponseMessage('Updat resume status')
+  @ResponseMessage('Update resume status')
   @Patch(':id')
   updateStatus(
     @Param('id') id: string,
@@ -50,8 +50,9 @@ export class ResumesController {
     return this.resumesService.update(id, status, user);
   }
 
+  @ResponseMessage('Delete a Resume')
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.resumesService.remove(+id);
+  remove(@Param('id') id: string, @User() user: IUser) {
+    return this.resumesService.remove(id, user);
   }
 }
