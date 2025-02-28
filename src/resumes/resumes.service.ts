@@ -1,10 +1,11 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
 import {UpdateResumeDto} from './dto/update-resume.dto';
 import {IUser} from 'src/users/user.interface';
 import {InjectModel} from '@nestjs/mongoose';
 import {Resume, ResumeDocument} from './schemas/resume.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class ResumesService {
@@ -51,8 +52,35 @@ export class ResumesService {
     return `This action returns a #${id} resume`;
   }
 
-  update(id: number, updateResumeDto: UpdateResumeDto) {
-    return `This action updates a #${id} resume`;
+  async update(_id: string, status: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return new BadRequestException(`Not found User with id = ${_id}`);
+    }
+
+    const updated = await this.resumeModel.updateOne(
+      {
+        _id,
+      },
+      {
+        status,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+        $push: {
+          history: {
+            status: status,
+            updatedAt: new Date(),
+            updatedBy: {
+              _id: user._id,
+              email: user.email,
+            },
+          },
+        },
+      },
+    );
+
+    return updated;
   }
 
   remove(id: number) {
