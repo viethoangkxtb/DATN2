@@ -24,19 +24,20 @@ export class ResumesController {
     return this.resumesService.create(createUserCvDto, user);
   }
 
-  @ResponseMessage('Fetch Company list with pagination')
-    @Get()
-    findAll(
-      @Query('current') currentPage: string,
-      @Query('pageSize') limit: string,
-      @Query() qs: string,
-    ) {
-      return this.resumesService.findAll(+currentPage, +limit, qs);
-    }
+  @ResponseMessage('Fetch Resume list with pagination')
+  @Get()
+  findAll(
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
+    @Query() qs: string,
+  ) {
+    return this.resumesService.findAll(+currentPage, +limit, qs);
+  }
 
+  @ResponseMessage('Fetch a Resume')
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.resumesService.findOne(+id);
+    return this.resumesService.findOne(id);
   }
 
   @ResponseMessage('Updat resume status')

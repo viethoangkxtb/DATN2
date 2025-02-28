@@ -81,7 +81,7 @@ export class JobsService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return `Company not found!`;
+      return new BadRequestException(`Not found Job with id = ${id}`);
     }
 
     await this.jobModel.updateOne(

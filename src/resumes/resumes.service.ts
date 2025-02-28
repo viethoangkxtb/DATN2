@@ -73,13 +73,17 @@ export class ResumesService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} resume`;
+  async findOne(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Resume with id = ${id}`);
+    }
+
+    return await this.resumeModel.findById(id);
   }
 
   async update(_id: string, status: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return new BadRequestException(`Not found User with id = ${_id}`);
+      return new BadRequestException(`Not found Resume with id = ${_id}`);
     }
 
     const updated = await this.resumeModel.updateOne(

@@ -57,7 +57,7 @@ export class CompaniesService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Job with id = ${id}`);
+      return new BadRequestException(`Not found Company with id = ${id}`);
     }
 
     return await this.companyModel.findById(id);
@@ -78,7 +78,7 @@ export class CompaniesService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return `Company not found!`;
+      return new BadRequestException(`Not found Company with id = ${id}`);
     }
 
     await this.companyModel.updateOne(
