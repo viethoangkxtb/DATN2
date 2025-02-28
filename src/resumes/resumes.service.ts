@@ -45,6 +45,12 @@ export class ResumesService {
     };
   }
 
+  async findByUsers(user: IUser) {
+    return await this.resumeModel.find({
+      userId: user._id,
+    });
+  }
+
   async findAll(currentPage: number, limit: number, qs: string) {
     const {filter, sort, projection, population} = aqp(qs);
     delete filter.current;
@@ -60,6 +66,7 @@ export class ResumesService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population)
+      .select(projection as any)
       .exec();
 
     return {
@@ -113,20 +120,20 @@ export class ResumesService {
   }
 
   async remove(id: string, user: IUser) {
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return new BadRequestException(`Not found Resume with id = ${id}`);
-      }
-  
-      await this.resumeModel.updateOne(
-        {_id: id},
-        {
-          deletedBy: {
-            _id: user._id,
-            email: user.email,
-          },
-        },
-      );
-  
-      return this.resumeModel.softDelete({_id: id});
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Resume with id = ${id}`);
     }
+
+    await this.resumeModel.updateOne(
+      {_id: id},
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return this.resumeModel.softDelete({_id: id});
+  }
 }

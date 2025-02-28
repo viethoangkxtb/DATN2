@@ -24,6 +24,12 @@ export class ResumesController {
     return this.resumesService.create(createUserCvDto, user);
   }
 
+  @ResponseMessage('Get Resumes by user')
+  @Post('by-user')
+  getResumesByUser(@User() user: IUser) {
+    return this.resumesService.findByUsers(user);
+  }
+
   @ResponseMessage('Fetch Resume list with pagination')
   @Get()
   findAll(
