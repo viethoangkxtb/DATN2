@@ -77,7 +77,12 @@ export class RolesService {
       return new BadRequestException(`Not found Role with id = ${id}`);
     }
 
-    return await this.roleModel.findById(id);
+    return await this.roleModel
+      .findById(id)
+      .populate({
+        path: 'permissions',
+        select: {_id: 1, apiPath: 1, name: 1, method: 1},
+      });
   }
 
   async update(id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
@@ -86,6 +91,14 @@ export class RolesService {
     }
 
     const {name, description, isActive, permissions} = updateRoleDto;
+
+    const isExit = await this.roleModel.findOne({name});
+
+    if (isExit) {
+      throw new BadRequestException(
+        `Role with name=${name} already exists. Please use another Role`,
+      );
+    }
 
     const updated = await this.roleModel.updateOne(
       {_id: id},

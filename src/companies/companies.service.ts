@@ -79,6 +79,16 @@ export class CompaniesService {
       return new BadRequestException(`Not found Company with id = ${id}`);
     }
 
+    const {name} = updateCompanyDto;
+
+    const isExit = await this.companyModel.findOne({name});
+
+    if (isExit) {
+      throw new BadRequestException(
+        `Company with name=${name} already exists. Please use another name`,
+      );
+    }
+
     return await this.companyModel.updateOne(
       {_id: id},
       {

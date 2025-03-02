@@ -33,7 +33,7 @@ export class UsersService {
         `Email: ${email} already exists. Please use another email`,
       );
     }
-    
+
     const hashPassword = this.getHashPassword(password);
 
     let newCreateUser = await this.userModel.create({
@@ -134,6 +134,15 @@ export class UsersService {
   }
 
   async update(updateUserDto: UpdateUserDto, user: IUser) {
+    const {email} = updateUserDto;
+    const isExit = await this.userModel.findOne({email});
+
+    if (isExit) {
+      throw new BadRequestException(
+        `Email: ${email} already exists. Please use another email`,
+      );
+    }
+
     const updated = await this.userModel.updateOne(
       {_id: updateUserDto._id},
       {

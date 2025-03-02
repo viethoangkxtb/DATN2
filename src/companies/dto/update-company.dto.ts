@@ -1,6 +1,4 @@
-import {OmitType} from '@nestjs/mapped-types';
-import {CreateCompanyDto} from './create-company.dto';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateCompanyDto } from './create-company.dto';
 
-export class UpdateCompanyDto extends OmitType(CreateCompanyDto, []) {
-  _id: string;
-}
+export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {}

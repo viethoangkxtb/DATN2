@@ -91,6 +91,14 @@ export class PermissionsService {
 
     const {name, apiPath, method, module} = updatePermissionDto;
 
+    const isExit = await this.permissionModel.findOne({apiPath, method});
+
+    if (isExit) {
+      throw new BadRequestException(
+        `Permission with ApiPath=${apiPath} and Method=${method} already exists. Please use another Permission`,
+      );
+    }
+
     const updated = await this.permissionModel.updateOne(
       {_id: id},
       {
