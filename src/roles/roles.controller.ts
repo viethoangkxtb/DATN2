@@ -40,11 +40,13 @@ export class RolesController {
     return this.rolesService.findOne(id);
   }
 
+  @ResponseMessage('Update a Role')
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
-    return this.rolesService.update(+id, updateRoleDto);
+  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto, @User() user: IUser,) {
+    return this.rolesService.update(id, updateRoleDto, user);
   }
 
+  @ResponseMessage('Delete a Role')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.rolesService.remove(+id);

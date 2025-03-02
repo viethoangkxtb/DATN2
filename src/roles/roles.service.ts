@@ -80,8 +80,27 @@ export class RolesService {
     return await this.roleModel.findById(id);
   }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+  async update(id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Role with id = ${id}`);
+    }
+
+    const {name, description, isActive, permissions} = updateRoleDto;
+
+    const updated = await this.roleModel.updateOne(
+      {_id: id},
+      {
+        name,
+        description,
+        isActive,
+        permissions,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+    return updated;
   }
 
   remove(id: number) {
