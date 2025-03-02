@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import {compareSync, genSaltSync, hashSync} from 'bcryptjs';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from './user.interface';
-import {User} from 'src/decorator/customize';
 import aqp from 'api-query-params';
 @Injectable()
 export class UsersService {
@@ -34,6 +33,7 @@ export class UsersService {
         `Email: ${email} already exists. Please use another email`,
       );
     }
+    
     const hashPassword = this.getHashPassword(password);
 
     let newCreateUser = await this.userModel.create({
@@ -150,7 +150,7 @@ export class UsersService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      new BadRequestException(`Not found User with id = ${id}`)
+      new BadRequestException(`Not found User with id = ${id}`);
     }
 
     await this.userModel.updateOne(
