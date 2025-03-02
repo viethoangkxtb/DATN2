@@ -44,6 +44,7 @@ export class JobsService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population)
+      .select(projection as any)
       .exec();
 
     return {
@@ -66,6 +67,10 @@ export class JobsService {
   }
 
   async update(id: string, updateJobDto: UpdateJobDto, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Job with id = ${id}`);
+    }
+
     const updated = await this.jobModel.updateOne(
       {_id: id},
       {

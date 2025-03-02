@@ -58,6 +58,7 @@ export class PermissionsService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population)
+      .select(projection as any)
       .exec();
 
     return {
@@ -72,14 +73,38 @@ export class PermissionsService {
   }
 
   async findOne(id: string) {
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return new BadRequestException(`Not found Permission with id = ${id}`);
-      }
-  
-      return await this.permissionModel.findById(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Permission with id = ${id}`);
     }
-  update(id: number, updatePermissionDto: UpdatePermissionDto) {
-    return `This action updates a #${id} permission`;
+
+    return await this.permissionModel.findById(id);
+  }
+
+  async update(
+    id: string,
+    updatePermissionDto: UpdatePermissionDto,
+    user: IUser,
+  ) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Permission with id = ${id}`);
+    }
+
+    const {name, apiPath, method, module} = updatePermissionDto;
+
+    const updated = await this.permissionModel.updateOne(
+      {_id: id},
+      {
+        name,
+        apiPath,
+        method,
+        module,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+    return updated;
   }
 
   remove(id: number) {

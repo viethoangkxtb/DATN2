@@ -16,6 +16,16 @@ export class CompaniesService {
   ) {}
 
   async create(createCompanyDto: CreateCompanyDto, user: IUser) {
+    const {name} = createCompanyDto;
+
+    const isExit = await this.companyModel.findOne({name});
+
+    if (isExit) {
+      throw new BadRequestException(
+        `Company with name=${name} already exists. Please use another name`,
+      );
+    }
+
     let company = await this.companyModel.create({
       ...createCompanyDto,
       createdBy: {
@@ -42,6 +52,7 @@ export class CompaniesService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population)
+      .select(projection as any)
       .exec();
 
     return {
@@ -64,6 +75,10 @@ export class CompaniesService {
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Company with id = ${id}`);
+    }
+
     return await this.companyModel.updateOne(
       {_id: id},
       {
