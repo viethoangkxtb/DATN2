@@ -8,11 +8,13 @@ import {compareSync, genSaltSync, hashSync} from 'bcryptjs';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from './user.interface';
 import aqp from 'api-query-params';
+import {ConfigService} from '@nestjs/config';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(UserM.name)
     private userModel: SoftDeleteModel<UserDocument>,
+    private configService: ConfigService,
   ) {}
 
   getHashPassword = (password: string) => {
@@ -120,13 +122,14 @@ export class UsersService {
       .findOne({
         _id: id,
       })
-      .select('-password'); //exclude >< include
+      .select('-password')
+      .populate({path: 'role', select: {_id: 1, name: 1}}); //exclude >< include
   }
 
   findOneByUsername(username: string) {
     return this.userModel.findOne({
       email: username,
-    });
+    }).populate({path: 'role', select: {name: 1, permissions: 1}});
   }
 
   isValidPassword(password: string, hash: string) {
@@ -160,6 +163,12 @@ export class UsersService {
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       new BadRequestException(`Not found User with id = ${id}`);
+    }
+
+    const foundUser = await this.userModel.findById(id);
+
+    if (foundUser.email === this.configService.get<string>('ADMIN_ACCOUNT')) {
+      new BadRequestException(`Cannot delete admin account`);
     }
 
     await this.userModel.updateOne(

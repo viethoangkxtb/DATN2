@@ -7,12 +7,14 @@ import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from 'src/users/user.interface';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RolesService {
   constructor(
     @InjectModel(Role.name)
     private roleModel: SoftDeleteModel<RoleDocument>,
+    private configService: ConfigService,
   ) {}
 
   async create(createRoleDto: CreateRoleDto, user: IUser) {
@@ -77,12 +79,10 @@ export class RolesService {
       return new BadRequestException(`Not found Role with id = ${id}`);
     }
 
-    return await this.roleModel
-      .findById(id)
-      .populate({
-        path: 'permissions',
-        select: {_id: 1, apiPath: 1, name: 1, method: 1},
-      });
+    return (await this.roleModel.findById(id)).populate({
+      path: 'permissions',
+      select: {_id: 1, apiPath: 1, name: 1, method: 1, module: 1},
+    });
   }
 
   async update(id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
@@ -92,13 +92,13 @@ export class RolesService {
 
     const {name, description, isActive, permissions} = updateRoleDto;
 
-    const isExit = await this.roleModel.findOne({name});
+    // const isExit = await this.roleModel.findOne({name});
 
-    if (isExit) {
-      throw new BadRequestException(
-        `Role with name=${name} already exists. Please use another Role`,
-      );
-    }
+    // if (isExit) {
+    //   throw new BadRequestException(
+    //     `Role with name=${name} already exists. Please use another Role`,
+    //   );
+    // }
 
     const updated = await this.roleModel.updateOne(
       {_id: id},
@@ -119,6 +119,12 @@ export class RolesService {
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return new BadRequestException(`Not found Role with id = ${id}`);
+    }
+
+    const foundRole = await this.roleModel.findById(id);
+
+    if (foundRole.name === this.configService.get<string>('ADMIN_NAME')) {
+      new BadRequestException(`Cannot delete admin role`);
     }
 
     await this.roleModel.updateOne(
