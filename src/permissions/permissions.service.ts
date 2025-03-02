@@ -5,6 +5,7 @@ import {IUser} from 'src/users/user.interface';
 import {InjectModel} from '@nestjs/mongoose';
 import {Permission, PermissionDocument} from './schemas/permission.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
+import aqp from 'api-query-params';
 
 @Injectable()
 export class PermissionsService {
@@ -41,8 +42,32 @@ export class PermissionsService {
     };
   }
 
-  findAll() {
-    return `This action returns all permissions`;
+  async findAll(currentPage: number, limit: number, qs: string) {
+    const {filter, sort, projection, population} = aqp(qs);
+    delete filter.current;
+    delete filter.pageSize;
+
+    let offset = (+currentPage - 1) * +limit;
+    let defaultLimit = +limit ? +limit : 10;
+    const totalItems = (await this.permissionModel.find(filter)).length;
+    const totalPages = Math.ceil(totalItems / defaultLimit);
+    const result = await this.permissionModel
+      .find(filter)
+      .skip(offset)
+      .limit(defaultLimit)
+      .sort(sort as any)
+      .populate(population)
+      .exec();
+
+    return {
+      meta: {
+        current: currentPage, //trang hiện tại
+        pageSize: limit, //số lượng bản ghi đã lấy
+        pages: totalPages, //tổng số trang với điều kiện query
+        total: totalItems, // tổng số phần tử (số bản ghi)
+      },
+      result, //kết quả query
+    };
   }
 
   findOne(id: number) {
