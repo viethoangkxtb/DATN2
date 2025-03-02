@@ -6,6 +6,7 @@ import {Role, RoleDocument} from './schemas/role.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from 'src/users/user.interface';
 import aqp from 'api-query-params';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class RolesService {
@@ -71,8 +72,12 @@ export class RolesService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  async findOne(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Role with id = ${id}`);
+    }
+
+    return await this.roleModel.findById(id);
   }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {

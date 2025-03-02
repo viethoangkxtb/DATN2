@@ -30,7 +30,7 @@ export class ResumesController {
     return this.resumesService.findByUsers(user);
   }
 
-  @ResponseMessage('Fetch all Resumes list with pagination')
+  @ResponseMessage('Fetch all Resumes with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,

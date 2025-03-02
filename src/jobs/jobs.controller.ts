@@ -25,7 +25,7 @@ export class JobsController {
   }
 
   @Public()
-  @ResponseMessage('Fetch all Jobs list with pagination')
+  @ResponseMessage('Fetch all Jobs with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,

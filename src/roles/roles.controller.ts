@@ -24,7 +24,7 @@ export class RolesController {
     return this.rolesService.create(createRoleDto, user);
   }
 
-  @ResponseMessage('Fetch all roles with pagination')
+  @ResponseMessage('Fetch all Roles with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,
@@ -34,9 +34,10 @@ export class RolesController {
     return this.rolesService.findAll(+currentPage, +limit, qs);
   }
 
+  @ResponseMessage('Fetch a Role by Id')
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.rolesService.findOne(+id);
+    return this.rolesService.findOne(id);
   }
 
   @Patch(':id')
