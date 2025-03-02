@@ -6,6 +6,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Permission, PermissionDocument} from './schemas/permission.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import aqp from 'api-query-params';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class PermissionsService {
@@ -70,10 +71,13 @@ export class PermissionsService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} permission`;
-  }
-
+  async findOne(id: string) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return new BadRequestException(`Not found Permission with id = ${id}`);
+      }
+  
+      return await this.permissionModel.findById(id);
+    }
   update(id: number, updatePermissionDto: UpdatePermissionDto) {
     return `This action updates a #${id} permission`;
   }
