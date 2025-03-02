@@ -29,7 +29,7 @@ export class UsersController {
     };
   }
 
-  @ResponseMessage("Fetch user with paginate")
+  @ResponseMessage("Fetch all Users with pagination")
   @Get()
   findAll(
     @Query("current") currentPage: string,
@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   @Public()
-  @ResponseMessage("Fetch user by id")
+  @ResponseMessage("Fetch User by Id")
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const foundUser = await this.usersService.findOne(id);

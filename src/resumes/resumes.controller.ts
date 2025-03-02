@@ -30,7 +30,7 @@ export class ResumesController {
     return this.resumesService.findByUsers(user);
   }
 
-  @ResponseMessage('Fetch Resume list with pagination')
+  @ResponseMessage('Fetch all Resumes list with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,
@@ -40,7 +40,7 @@ export class ResumesController {
     return this.resumesService.findAll(+currentPage, +limit, qs);
   }
 
-  @ResponseMessage('Fetch a Resume')
+  @ResponseMessage('Fetch a Resume by Id')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.resumesService.findOne(id);

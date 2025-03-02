@@ -25,7 +25,7 @@ export class CompaniesController {
   }
 
   @Public()
-  @ResponseMessage('Fetch Company list with pagination')
+  @ResponseMessage('Fetch all Companies with pagination')
   @Get()
   findAll(
     @Query('current') currentPage: string,
@@ -36,7 +36,7 @@ export class CompaniesController {
   }
 
   @Public()
-  @ResponseMessage('Fetch a Company')
+  @ResponseMessage('Fetch a Company by Id')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.companiesService.findOne(id);

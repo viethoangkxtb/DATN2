@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import {RolesService} from './roles.service';
 import {CreateRoleDto} from './dto/create-role.dto';
@@ -23,9 +24,14 @@ export class RolesController {
     return this.rolesService.create(createRoleDto, user);
   }
 
+  @ResponseMessage('Fetch all roles with pagination')
   @Get()
-  findAll() {
-    return this.rolesService.findAll();
+  findAll(
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
+    @Query() qs: string,
+  ) {
+    return this.rolesService.findAll(+currentPage, +limit, qs);
   }
 
   @Get(':id')

@@ -37,7 +37,7 @@ export class PermissionsController {
     return this.permissionsService.findAll(+currentPage, +limit, qs);
   }
 
-  @ResponseMessage('Fetch a Permission')
+  @ResponseMessage('Fetch a Permission by Id')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.permissionsService.findOne(id);
