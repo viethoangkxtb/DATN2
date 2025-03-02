@@ -103,7 +103,21 @@ export class RolesService {
     return updated;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Role with id = ${id}`);
+    }
+
+    await this.roleModel.updateOne(
+      {_id: id},
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return this.roleModel.softDelete({_id: id});
   }
 }
