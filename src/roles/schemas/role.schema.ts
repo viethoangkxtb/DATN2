@@ -45,7 +45,7 @@ export class Role {
   updatedAt: Date;
 
   @Prop()
-  isDeleted: Boolean;
+  isDeleted: boolean;
 
   @Prop()
   deletedAt: Date;
