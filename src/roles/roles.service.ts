@@ -7,22 +7,21 @@ import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from 'src/users/user.interface';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
-import { ConfigService } from '@nestjs/config';
+import {ADMIN_ROLE} from 'src/databases/sample';
 
 @Injectable()
 export class RolesService {
   constructor(
     @InjectModel(Role.name)
     private roleModel: SoftDeleteModel<RoleDocument>,
-    private configService: ConfigService,
   ) {}
 
   async create(createRoleDto: CreateRoleDto, user: IUser) {
     const {name, description, isActive, permissions} = createRoleDto;
 
-    const isExit = await this.roleModel.findOne({name});
+    const isExist = await this.roleModel.findOne({name});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Role with name=${name} already exists. Please use another Role`,
       );
@@ -92,9 +91,9 @@ export class RolesService {
 
     const {name, description, isActive, permissions} = updateRoleDto;
 
-    // const isExit = await this.roleModel.findOne({name});
+    // const isExist = await this.roleModel.findOne({name});
 
-    // if (isExit) {
+    // if (isExist) {
     //   throw new BadRequestException(
     //     `Role with name=${name} already exists. Please use another Role`,
     //   );
@@ -123,8 +122,8 @@ export class RolesService {
 
     const foundRole = await this.roleModel.findById(id);
 
-    if (foundRole.name === this.configService.get<string>('ADMIN_NAME')) {
-      new BadRequestException(`Cannot delete admin role`);
+    if (foundRole.name === ADMIN_ROLE) {
+      new BadRequestException(`Cannot delete Admin Role`);
     }
 
     await this.roleModel.updateOne(

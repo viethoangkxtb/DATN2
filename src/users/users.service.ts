@@ -9,12 +9,17 @@ import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from './user.interface';
 import aqp from 'api-query-params';
 import {ConfigService} from '@nestjs/config';
+import {Role, RoleDocument} from 'src/roles/schemas/role.schema';
+import {USER_ROLE} from 'src/databases/sample';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(UserM.name)
     private userModel: SoftDeleteModel<UserDocument>,
     private configService: ConfigService,
+
+    @InjectModel(Role.name)
+    private roleModel: SoftDeleteModel<RoleDocument>,
   ) {}
 
   getHashPassword = (password: string) => {
@@ -28,9 +33,9 @@ export class UsersService {
     const {name, email, password, age, gender, address, role, company} =
       createUserDto;
 
-    const isExit = await this.userModel.findOne({email});
+    const isExist = await this.userModel.findOne({email});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Email: ${email} already exists. Please use another email`,
       );
@@ -59,13 +64,15 @@ export class UsersService {
   async register(registerUserDto: RegisterUserDto) {
     const {name, email, password, age, gender, address} = registerUserDto;
 
-    const isExit = await this.userModel.findOne({email});
+    const isExist = await this.userModel.findOne({email});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Email: ${email} already exists. Please use another email`,
       );
     }
+
+    const userRole = await this.roleModel.findOne({name: USER_ROLE});
 
     const hashPassword = this.getHashPassword(password);
 
@@ -76,7 +83,7 @@ export class UsersService {
       age,
       gender,
       address,
-      role: 'USER',
+      role: userRole?._id,
     });
 
     return newRegisterUser;
@@ -127,9 +134,11 @@ export class UsersService {
   }
 
   findOneByUsername(username: string) {
-    return this.userModel.findOne({
-      email: username,
-    }).populate({path: 'role', select: {name: 1, permissions: 1}});
+    return this.userModel
+      .findOne({
+        email: username,
+      })
+      .populate({path: 'role', select: {name: 1}});
   }
 
   isValidPassword(password: string, hash: string) {
@@ -138,9 +147,9 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto, user: IUser) {
     const {email} = updateUserDto;
-    const isExit = await this.userModel.findOne({email});
+    const isExist = await this.userModel.findOne({email});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Email: ${email} already exists. Please use another email`,
       );
@@ -168,7 +177,7 @@ export class UsersService {
     const foundUser = await this.userModel.findById(id);
 
     if (foundUser.email === this.configService.get<string>('ADMIN_ACCOUNT')) {
-      new BadRequestException(`Cannot delete admin account`);
+      new BadRequestException(`Cannot delete Admin Account`);
     }
 
     await this.userModel.updateOne(
@@ -190,6 +199,8 @@ export class UsersService {
   };
 
   findUserByToken = async (refreshToken: string) => {
-    return await this.userModel.findOne({refreshToken});
+    return await this.userModel
+      .findOne({refreshToken})
+      .populate({path: 'role', select: {name: 1}});
   };
 }

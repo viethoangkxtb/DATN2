@@ -18,9 +18,9 @@ export class CompaniesService {
   async create(createCompanyDto: CreateCompanyDto, user: IUser) {
     const {name} = createCompanyDto;
 
-    const isExit = await this.companyModel.findOne({name});
+    const isExist = await this.companyModel.findOne({name});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Company with name=${name} already exists. Please use another name`,
       );
@@ -81,9 +81,9 @@ export class CompaniesService {
 
     const {name} = updateCompanyDto;
 
-    const isExit = await this.companyModel.findOne({name});
+    const isExist = await this.companyModel.findOne({name});
 
-    if (isExit) {
+    if (isExist) {
       throw new BadRequestException(
         `Company with name=${name} already exists. Please use another name`,
       );
