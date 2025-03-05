@@ -1,7 +1,7 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
 import {UpdateResumeDto} from './dto/update-resume.dto';
-import {IUser} from 'src/users/user.interface';
+import {IUser} from 'src/users/users.interface';
 import {InjectModel} from '@nestjs/mongoose';
 import {Resume, ResumeDocument} from './schemas/resume.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';

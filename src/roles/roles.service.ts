@@ -4,7 +4,7 @@ import {UpdateRoleDto} from './dto/update-role.dto';
 import {InjectModel} from '@nestjs/mongoose';
 import {Role, RoleDocument} from './schemas/role.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
-import {IUser} from 'src/users/user.interface';
+import {IUser} from 'src/users/users.interface';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
 import {ADMIN_ROLE} from 'src/databases/sample';

@@ -2,7 +2,7 @@ import {ExtractJwt, Strategy} from 'passport-jwt';
 import {PassportStrategy} from '@nestjs/passport';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
-import {IUser} from 'src/users/user.interface';
+import {IUser} from 'src/users/users.interface';
 import {RolesService} from 'src/roles/roles.service';
 
 @Injectable()

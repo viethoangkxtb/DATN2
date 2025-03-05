@@ -6,7 +6,7 @@ import {User as UserM, UserDocument} from './schemas/user.schema';
 import mongoose from 'mongoose';
 import {compareSync, genSaltSync, hashSync} from 'bcryptjs';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
-import {IUser} from './user.interface';
+import {IUser} from './users.interface';
 import aqp from 'api-query-params';
 import {ConfigService} from '@nestjs/config';
 import {Role, RoleDocument} from 'src/roles/schemas/role.schema';

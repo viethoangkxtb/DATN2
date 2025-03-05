@@ -12,7 +12,7 @@ import {UsersService} from './users.service';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {Public, ResponseMessage, User} from 'src/decorator/customize';
-import {IUser} from './user.interface';
+import {IUser} from './users.interface';
 
 @Controller('users')
 export class UsersController {

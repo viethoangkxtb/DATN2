@@ -4,7 +4,7 @@ import {Public, ResponseMessage, User} from 'src/decorator/customize';
 import {LocalAuthGuard} from './local-auth.guard';
 import {RegisterUserDto} from 'src/users/dto/create-user.dto';
 import {Request, Response} from 'express';
-import {IUser} from 'src/users/user.interface';
+import {IUser} from 'src/users/users.interface';
 import {RolesService} from 'src/roles/roles.service';
 
 @Controller('/auth')
