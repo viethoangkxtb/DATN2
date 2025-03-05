@@ -25,9 +25,8 @@ export class AuthService {
         const userRole = user.role as unknown as {_id: string; name: string};
         const temp = await this.rolesService.findOne(userRole._id);
 
-        // Kiểm tra nếu `temp` không phải là `BadRequestException`
         if (temp instanceof BadRequestException) {
-          throw temp; // Hoặc xử lý lỗi theo logic riêng của bạn
+          throw temp;
         }
 
         const objUser = {
