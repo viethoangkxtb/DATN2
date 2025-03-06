@@ -7,16 +7,17 @@ import {UsersModule} from './users/users.module';
 import {AuthModule} from './auth/auth.module';
 import {softDeletePlugin} from 'soft-delete-plugin-mongoose';
 import {CompaniesModule} from './companies/companies.module';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { APP_GUARD } from '@nestjs/core';
-import { JobsModule } from './jobs/jobs.module';
-import { FilesModule } from './files/files.module';
-import { ResumesModule } from './resumes/resumes.module';
-import { PermissionsModule } from './permissions/permissions.module';
-import { RolesModule } from './roles/roles.module';
-import { DatabasesModule } from './databases/databases.module';
-import { SubscribersModule } from './subscribers/subscribers.module';
-import { MailModule } from './mail/mail.module';
+import {JwtAuthGuard} from './auth/jwt-auth.guard';
+import {APP_GUARD} from '@nestjs/core';
+import {JobsModule} from './jobs/jobs.module';
+import {FilesModule} from './files/files.module';
+import {ResumesModule} from './resumes/resumes.module';
+import {PermissionsModule} from './permissions/permissions.module';
+import {RolesModule} from './roles/roles.module';
+import {DatabasesModule} from './databases/databases.module';
+import {SubscribersModule} from './subscribers/subscribers.module';
+import {MailModule} from './mail/mail.module';
+import {ScheduleModule} from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { MailModule } from './mail/mail.module';
     DatabasesModule,
     SubscribersModule,
     MailModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [
