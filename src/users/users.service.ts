@@ -145,18 +145,13 @@ export class UsersService {
     return compareSync(password, hash);
   }
 
-  async update(updateUserDto: UpdateUserDto, user: IUser) {
-    const {email} = updateUserDto;
-    const isExist = await this.userModel.findOne({email});
-
-    if (isExist) {
-      throw new BadRequestException(
-        `Email: ${email} already exists. Please use another email`,
-      );
+  async update(updateUserDto: UpdateUserDto, user: IUser, _id: string) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return new BadRequestException(`Not found User with id = ${_id}`);
     }
 
     const updated = await this.userModel.updateOne(
-      {_id: updateUserDto._id},
+      {_id: _id},
       {
         ...updateUserDto,
         updatedBy: {
