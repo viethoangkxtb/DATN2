@@ -12,7 +12,7 @@ import {ResumesService} from './resumes.service';
 import {CreateUserCvDto} from './dto/create-resume.dto';
 import {ResponseMessage, User} from 'src/decorator/customize';
 import {IUser} from 'src/users/users.interface';
-import { ApiTags } from '@nestjs/swagger';
+import {ApiTags} from '@nestjs/swagger';
 
 @ApiTags('resumes')
 @Controller('resumes')
@@ -37,8 +37,9 @@ export class ResumesController {
     @Query('current') currentPage: string,
     @Query('pageSize') limit: string,
     @Query() qs: string,
+    @User() user: IUser,
   ) {
-    return this.resumesService.findAll(+currentPage, +limit, qs);
+    return this.resumesService.findAll(+currentPage, +limit, qs, user);
   }
 
   @ResponseMessage('Fetch a Resume by Id')

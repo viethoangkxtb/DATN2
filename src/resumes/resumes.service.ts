@@ -63,10 +63,15 @@ export class ResumesService {
       ]);
   }
 
-  async findAll(currentPage: number, limit: number, qs: string) {
+  async findAll(currentPage: number, limit: number, qs: string, user: IUser) {
     const {filter, sort, projection, population} = aqp(qs);
     delete filter.current;
     delete filter.pageSize;
+
+    const companyId = user.company._id;
+    if (companyId) {
+      filter['companyId'] = companyId;
+    }
 
     let offset = (+currentPage - 1) * +limit;
     let defaultLimit = +limit ? +limit : 10;

@@ -4,12 +4,14 @@ import {BadRequestException, Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {IUser} from 'src/users/users.interface';
 import {RolesService} from 'src/roles/roles.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private configService: ConfigService,
     private rolesService: RolesService,
+    private usersService: UsersService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -30,11 +32,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     const temp1 = temp.toObject();
 
+    const userTest = await this.usersService.findOne(_id);
+    if (userTest instanceof BadRequestException) {
+      throw userTest;
+    }
+    const company = userTest.company || 'You do not in a company';
+
     return {
       _id,
       name,
       email,
       role,
+      company,
       permissions: temp1?.permissions ?? [],
     };
   }
