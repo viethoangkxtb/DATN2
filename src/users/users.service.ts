@@ -201,4 +201,20 @@ export class UsersService {
       .findOne({refreshToken})
       .populate({path: 'role', select: {name: 1}});
   };
+
+  async changePassword(newPassword: string, user: IUser) {
+    const hashPassword = this.getHashPassword(newPassword);
+    const updated = await this.userModel.updateOne(
+      {_id: user._id},
+      {
+        password: hashPassword,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return updated;
+  }
 }

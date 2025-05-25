@@ -84,5 +84,14 @@ export class UserLoginDto {
       description: 'password',
   })
   readonly password: string;
+}
 
+export class ChangePasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  oldPassword: string;
+
+  @IsString()
+  @IsNotEmpty()
+  newPassword: string;
 }

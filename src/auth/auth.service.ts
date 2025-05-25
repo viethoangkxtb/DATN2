@@ -1,8 +1,11 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable, UnauthorizedException} from '@nestjs/common';
 import {UsersService} from 'src/users/users.service';
 import {JwtService} from '@nestjs/jwt';
 import {IUser} from 'src/users/users.interface';
-import {RegisterUserDto} from 'src/users/dto/create-user.dto';
+import {
+  ChangePasswordDto,
+  RegisterUserDto,
+} from 'src/users/dto/create-user.dto';
 import {ConfigService} from '@nestjs/config';
 import ms from 'ms';
 import {Response} from 'express';
@@ -155,5 +158,21 @@ export class AuthService {
     response.clearCookie('refresh_token');
     await this.usersService.updateUserToken('', user._id);
     return 'Logged out';
+  };
+
+  changePassword = async (
+    changePasswordDto: ChangePasswordDto,
+    currentUser: IUser,
+  ) => {
+    const {oldPassword, newPassword} = changePasswordDto
+    const {email: username} = currentUser
+
+    const user = await this.validateUser(username, oldPassword);
+    if (!user) {
+      throw new UnauthorizedException('Invalid Password!');
+    }
+
+    const updated = await this.usersService.changePassword(newPassword, currentUser)
+    return updated;
   };
 }
