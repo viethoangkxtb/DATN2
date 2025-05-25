@@ -68,9 +68,11 @@ export class ResumesService {
     delete filter.current;
     delete filter.pageSize;
 
-    const companyId = user.company._id;
-    if (companyId) {
-      filter['companyId'] = companyId;
+    if (user) {
+      const companyId = user.company._id;
+      if (companyId) {
+        filter['companyId'] = companyId;
+      }
     }
 
     let offset = (+currentPage - 1) * +limit;

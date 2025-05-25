@@ -13,7 +13,7 @@ import {CreateJobDto} from './dto/create-job.dto';
 import {UpdateJobDto} from './dto/update-job.dto';
 import {Public, ResponseMessage, User} from 'src/decorator/customize';
 import {IUser} from 'src/users/users.interface';
-import { ApiTags } from '@nestjs/swagger';
+import {ApiTags} from '@nestjs/swagger';
 
 @ApiTags('jobs')
 @Controller('jobs')
@@ -35,6 +35,17 @@ export class JobsController {
     @Query() qs: string,
   ) {
     return this.jobsService.findAll(+currentPage, +limit, qs);
+  }
+
+  @ResponseMessage('Fetch all Jobs with pagination for HR')
+  @Post('/hr')
+  findAllForHR(
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
+    @Query() qs: string,
+    @User() user: IUser,
+  ) {
+    return this.jobsService.findAllForHR(+currentPage, +limit, qs, user);
   }
 
   @Public()
