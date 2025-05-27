@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
 import {CreateJobDto} from './dto/create-job.dto';
 import {UpdateJobDto} from './dto/update-job.dto';
 import {IUser} from 'src/users/users.interface';
@@ -16,6 +16,17 @@ export class JobsService {
   ) {}
 
   async create(createJobDto: CreateJobDto, user: IUser) {
+    if (user.role.name !== 'SUPER_ADMIN') {
+      if (
+        !createJobDto.company ||
+        String(createJobDto.company._id) !== String(user.company._id)
+      ) {
+        throw new ForbiddenException(
+          'Bạn không có quyền tạo job cho công ty khác',
+        );
+      }
+    }
+
     let job = await this.jobModel.create({
       ...createJobDto,
       createdBy: {
