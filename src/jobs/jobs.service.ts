@@ -27,6 +27,12 @@ export class JobsService {
       }
     }
 
+    if (createJobDto.startDate > createJobDto.endDate) {
+      throw new BadRequestException(
+          'Ngày bắt đầu phải ở trước ngày kết thúc',
+        );
+    }
+
     let job = await this.jobModel.create({
       ...createJobDto,
       createdBy: {

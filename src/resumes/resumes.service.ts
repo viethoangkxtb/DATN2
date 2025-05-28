@@ -75,6 +75,12 @@ export class ResumesService {
       }
     }
 
+    const fullPopulation = [
+      ...(population || []),
+      {path: 'companyId', select: {name: 1}},
+      {path: 'jobId', select: {name: 1}},
+    ];
+
     let offset = (+currentPage - 1) * +limit;
     let defaultLimit = +limit ? +limit : 10;
     const totalItems = (await this.resumeModel.find(filter)).length;
@@ -84,7 +90,7 @@ export class ResumesService {
       .skip(offset)
       .limit(defaultLimit)
       .sort(sort as any)
-      .populate(population)
+      .populate(fullPopulation)
       .select(projection as any)
       .exec();
 

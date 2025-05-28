@@ -100,13 +100,18 @@ export class UsersService {
     const totalItems = (await this.userModel.find(filter)).length;
     const totalPages = Math.ceil(totalItems / defaultLimit);
 
+    const fullPopulation = [
+      ...(population || []),
+      {path: 'role', select: {name: 1}},
+    ];
+
     const result = await this.userModel
       .find(filter)
       .skip(offset)
       .limit(defaultLimit)
       .sort(sort as any)
       .select('-password')
-      .populate(population)
+      .populate(fullPopulation)
       .exec();
 
     return {
