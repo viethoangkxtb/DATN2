@@ -22,7 +22,7 @@ export class User {
   gender: string;
 
   @Prop()
-  adress: string;
+  address: string;
 
   @Prop()
   phone: string;
