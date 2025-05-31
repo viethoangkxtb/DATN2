@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
+import {Injectable} from '@nestjs/common';
+import {MailerService} from '@nestjs-modules/mailer';
 
 @Injectable()
 export class MailService {
@@ -24,7 +24,7 @@ export class MailService {
       await this.mailerService.sendMail({
         to: data.to,
         from: data.from, // Thay bằng email của công ty
-        subject: 'Thông báo kết quả tuyển dụng',
+        subject: `Thông báo kết quả tuyển dụng – ${data.companyName}`,
         template: 'approve-resume', // Tên template (interview.hbs)
         context: {
           companyName: data.companyName,
@@ -44,6 +44,41 @@ export class MailService {
     } catch (error) {
       console.error(`Failed to send email to ${data.to}:`, error);
       throw new Error('Failed to send email');
+    }
+  }
+
+  async sendRejectEmail(data: {
+    to: string;
+    from: string;
+    companyName: string;
+    name: string;
+    jobTitle: string;
+    senderName: string;
+    senderTitle: string;
+    senderPhone: string;
+    senderEmail: string;
+    customMessage: string;
+  }) {
+    try {
+      await this.mailerService.sendMail({
+        to: data.to,
+        from: data.from,
+        subject: `Thông báo kết quả tuyển dụng – ${data.companyName}`,
+        template: 'reject-resume', // Tên file template (không cần .hbs nếu dùng Handlebars)
+        context: {
+          companyName: data.companyName,
+          name: data.name,
+          jobTitle: data.jobTitle,
+          senderName: data.senderName,
+          senderTitle: data.senderTitle,
+          senderPhone: data.senderPhone,
+          senderEmail: data.senderEmail,
+          customMessage: data.customMessage || '',
+        },
+      });
+    } catch (error) {
+      console.error(`Failed to send reject email to ${data.to}:`, error);
+      throw new Error('Failed to send reject email');
     }
   }
 }

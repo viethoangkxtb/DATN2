@@ -102,4 +102,24 @@ export class MailController {
     await this.mailService.sendInterviewEmail(body);
     return { message: 'Email sent successfully' };
   }
+
+  @Post('reject-email')
+  @Public()
+  @ResponseMessage('Send reject email')
+  async sendRejectEmail(@Body() body: {
+    to: string;
+    from: string;
+    companyName: string;
+    name: string;
+    jobTitle: string;
+    senderName: string;
+    senderTitle: string;
+    senderPhone: string;
+    senderEmail: string;
+    customMessage: string;
+  }) {
+    
+    await this.mailService.sendRejectEmail(body);
+    return { message: 'Reject email sent successfully' };
+  }
 }
