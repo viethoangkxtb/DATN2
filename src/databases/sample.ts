@@ -11,7 +11,7 @@ export const INIT_PERMISSIONS = [
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -20,7 +20,7 @@ export const INIT_PERMISSIONS = [
         "__v": 0,
         "updatedBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         }
     },
     {
@@ -31,7 +31,7 @@ export const INIT_PERMISSIONS = [
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -47,7 +47,7 @@ export const INIT_PERMISSIONS = [
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -63,7 +63,7 @@ export const INIT_PERMISSIONS = [
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -79,7 +79,7 @@ export const INIT_PERMISSIONS = [
         "module": "COMPANIES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -95,7 +95,7 @@ export const INIT_PERMISSIONS = [
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -111,7 +111,7 @@ export const INIT_PERMISSIONS = [
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -127,7 +127,7 @@ export const INIT_PERMISSIONS = [
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -143,7 +143,7 @@ export const INIT_PERMISSIONS = [
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -159,7 +159,7 @@ export const INIT_PERMISSIONS = [
         "module": "USERS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -175,7 +175,7 @@ export const INIT_PERMISSIONS = [
         "module": "FILES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -191,7 +191,7 @@ export const INIT_PERMISSIONS = [
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -207,7 +207,7 @@ export const INIT_PERMISSIONS = [
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -223,7 +223,7 @@ export const INIT_PERMISSIONS = [
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -239,7 +239,7 @@ export const INIT_PERMISSIONS = [
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -255,7 +255,7 @@ export const INIT_PERMISSIONS = [
         "module": "JOBS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -271,7 +271,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -287,7 +287,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -303,7 +303,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -319,7 +319,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -335,7 +335,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -351,7 +351,7 @@ export const INIT_PERMISSIONS = [
         "module": "RESUMES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -367,7 +367,7 @@ export const INIT_PERMISSIONS = [
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -383,7 +383,7 @@ export const INIT_PERMISSIONS = [
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -399,7 +399,7 @@ export const INIT_PERMISSIONS = [
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -415,7 +415,7 @@ export const INIT_PERMISSIONS = [
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -431,7 +431,7 @@ export const INIT_PERMISSIONS = [
         "module": "PERMISSIONS",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -447,7 +447,7 @@ export const INIT_PERMISSIONS = [
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -463,7 +463,7 @@ export const INIT_PERMISSIONS = [
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -479,7 +479,7 @@ export const INIT_PERMISSIONS = [
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -495,7 +495,7 @@ export const INIT_PERMISSIONS = [
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,
@@ -511,7 +511,7 @@ export const INIT_PERMISSIONS = [
         "module": "ROLES",
         "createdBy": {
             "_id": "647b5108a8a243e8191855b5",
-            "email": "hoidanit@gmail.com"
+            "email": "nguyenviethoang@gmail.com"
         },
         "isDeleted": false,
         "deletedAt": null,

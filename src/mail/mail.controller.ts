@@ -1,4 +1,4 @@
-import {Controller, Get} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {MailService} from './mail.service';
 import {Public, ResponseMessage} from 'src/decorator/customize';
 import {MailerService} from '@nestjs-modules/mailer';
@@ -11,6 +11,8 @@ import {Job, JobDocument} from 'src/jobs/schemas/job.schema';
 import {InjectModel} from '@nestjs/mongoose';
 import {Cron, CronExpression} from '@nestjs/schedule';
 import { ApiTags } from '@nestjs/swagger';
+import { Resume, ResumeDocument } from 'src/resumes/schemas/resume.schema';
+import { ResumesService } from 'src/resumes/resumes.service';
 
 @ApiTags('mail')
 @Controller('mail')
@@ -24,6 +26,9 @@ export class MailController {
 
     @InjectModel(Job.name)
     private jobModel: SoftDeleteModel<JobDocument>,
+
+    @InjectModel(Resume.name)
+    private resumeModel: SoftDeleteModel<ResumeDocument>,
   ) {}
 
   @Get()
@@ -60,5 +65,41 @@ export class MailController {
         });
       }
     }
+  }
+
+  // @Post('/approve-email/:id')
+  // @Public()
+  // @ResponseMessage('Approve email')
+  // async handleApproveEmail(@Param('id') id: string) {
+  //   const resume = await this.resumeModel.findOne({ _id: id });
+  //   if (!resume || !resume.email) {
+  //     throw new Error('Resume not found or email is missing');
+  //   }
+
+  //   await this.mailService.sendApprovalEmail(resume.email, );
+  //   return { message: 'Email sent successfully' };
+  // }
+
+  @Post('approve-email')
+  @Public()
+  @ResponseMessage('Send approve interview email')
+  async sendInterviewEmail(@Body() body: {
+    to: string;
+    from: string;
+    companyName: string;
+    name: string;
+    jobTitle: string;
+    interviewTime: string;
+    interviewType: string;
+    interviewLocation: string;
+    jobLink: string;
+    senderName: string;
+    senderTitle: string;
+    senderPhone: string;
+    senderEmail: string;
+  }) {
+    // console.log('Dữ liệu gửi email:', body);
+    await this.mailService.sendInterviewEmail(body);
+    return { message: 'Email sent successfully' };
   }
 }

@@ -79,6 +79,7 @@ export class ResumesService {
       ...(population || []),
       {path: 'companyId', select: {name: 1}},
       {path: 'jobId', select: {name: 1}},
+      {path: 'userId', select: 'name'},
     ];
 
     let offset = (+currentPage - 1) * +limit;
@@ -91,8 +92,15 @@ export class ResumesService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(fullPopulation)
+      // .populate({path: 'userId', select: 'name'})
       .select(projection as any)
       .exec();
+
+    const modifiedResult = result.map(doc => ({
+      ...doc.toObject(),
+      nameLogin: user?.name || 'N/A',
+      userLogin: user?.email || 'N/A',
+    }));
 
     return {
       meta: {
@@ -101,7 +109,7 @@ export class ResumesService {
         pages: totalPages, //tổng số trang với điều kiện query
         total: totalItems, // tổng số phần tử (số bản ghi)
       },
-      result, //kết quả query
+      result: modifiedResult, //kết quả query
     };
   }
 
@@ -110,7 +118,9 @@ export class ResumesService {
       return new BadRequestException(`Not found Resume with id = ${id}`);
     }
 
-    return await this.resumeModel.findById(id);
+    return await this.resumeModel
+      .findById(id)
+      .populate({path: 'userId', select: 'name'});
   }
 
   async update(_id: string, status: string, user: IUser) {

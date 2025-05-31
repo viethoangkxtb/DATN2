@@ -8,6 +8,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MongooseModule } from '@nestjs/mongoose';
 import { Subscriber, SubscriberSchema } from 'src/subscribers/schemas/subscriber.schema';
 import { Job, JobSchema } from 'src/jobs/schemas/job.schema';
+import { Resume, ResumeSchema } from 'src/resumes/schemas/resume.schema';
 @Module({
   imports: [
     MailerModule.forRootAsync({
@@ -37,6 +38,7 @@ import { Job, JobSchema } from 'src/jobs/schemas/job.schema';
     MongooseModule.forFeature([
       { name: Subscriber.name, schema: SubscriberSchema },
       { name: Job.name, schema: JobSchema },
+      { name: Resume.name, schema: ResumeSchema },
     ])
   ],
   controllers: [MailController],
