@@ -6,6 +6,7 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsObject,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -94,4 +95,27 @@ export class ChangePasswordDto {
   @IsString()
   @IsNotEmpty()
   newPassword: string;
+}
+
+export class UpdateForNomalUserDTO {
+  @IsNotEmpty({message: 'Name is required'})
+  name: string;
+
+  @IsNotEmpty({message: 'Age is required'})
+  age: number;
+
+  @IsNotEmpty({message: 'Gender is required'})
+  gender: string;
+
+  // @IsNotEmpty({message: 'Address is required'})
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  // @IsNotEmptyObject()
+  @IsObject()
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => Company)
+  company: Company;
 }

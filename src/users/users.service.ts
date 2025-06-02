@@ -1,5 +1,5 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {CreateUserDto, RegisterUserDto} from './dto/create-user.dto';
+import {CreateUserDto, RegisterUserDto, UpdateForNomalUserDTO} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {InjectModel} from '@nestjs/mongoose';
 import {User as UserM, UserDocument} from './schemas/user.schema';
@@ -151,6 +151,25 @@ export class UsersService {
   }
 
   async update(updateUserDto: UpdateUserDto, user: IUser, _id: string) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return new BadRequestException(`Not found User with id = ${_id}`);
+    }
+
+    const updated = await this.userModel.updateOne(
+      {_id: _id},
+      {
+        ...updateUserDto,
+        updatedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return updated;
+  }
+
+  async updateForNormal(updateUserDto: UpdateForNomalUserDTO, user: IUser, _id: string) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
       return new BadRequestException(`Not found User with id = ${_id}`);
     }

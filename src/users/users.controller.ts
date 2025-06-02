@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import {UsersService} from './users.service';
-import {CreateUserDto} from './dto/create-user.dto';
+import {CreateUserDto, UpdateForNomalUserDTO} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {Public, ResponseMessage, User} from 'src/decorator/customize';
 import {IUser} from './users.interface';
@@ -57,6 +57,17 @@ export class UsersController {
     @Param('id') id: string,
   ) {
     let updateUser = await this.usersService.update(updateUserDto, user, id);
+    return updateUser;
+  }
+
+  @ResponseMessage('Update a User')
+  @Post(':id')
+  async updateForNormal(
+    @Body() updateUserDto: UpdateForNomalUserDTO,
+    @User() user: IUser,
+    @Param('id') id: string,
+  ) {
+    let updateUser = await this.usersService.updateForNormal(updateUserDto, user, id);
     return updateUser;
   }
 
