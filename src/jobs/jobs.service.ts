@@ -7,6 +7,7 @@ import {Job, JobDocument} from './schemas/job.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
+import { ADMIN_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class JobsService {
@@ -85,7 +86,7 @@ export class JobsService {
     delete filter.current;
     delete filter.pageSize;
 
-    if (user) {
+    if (user && user.role.name !== ADMIN_ROLE) {
       const companyId = user.company._id;
       if (companyId) {
         filter['company._id'] = companyId;

@@ -7,6 +7,7 @@ import {Resume, ResumeDocument} from './schemas/resume.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import mongoose from 'mongoose';
 import aqp from 'api-query-params';
+import { ADMIN_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class ResumesService {
@@ -68,7 +69,7 @@ export class ResumesService {
     delete filter.current;
     delete filter.pageSize;
 
-    if (user) {
+    if (user && user.role.name !== ADMIN_ROLE) {
       const companyId = user.company._id;
       if (companyId) {
         filter['companyId'] = companyId;
