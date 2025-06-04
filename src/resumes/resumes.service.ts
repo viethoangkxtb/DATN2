@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
 import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
 import {UpdateResumeDto} from './dto/update-resume.dto';
 import {IUser} from 'src/users/users.interface';
@@ -7,7 +7,7 @@ import {Resume, ResumeDocument} from './schemas/resume.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import mongoose from 'mongoose';
 import aqp from 'api-query-params';
-import { ADMIN_ROLE } from 'src/databases/sample';
+import {ADMIN_ROLE} from 'src/databases/sample';
 
 @Injectable()
 export class ResumesService {
@@ -62,6 +62,32 @@ export class ResumesService {
           select: {name: 1},
         },
       ]);
+  }
+
+  async removeForUser(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new BadRequestException(`Not found Resume with id = ${id}`);
+    }
+
+    const foundResume = await this.resumeModel.findById(id);
+
+    if (foundResume.userId.toString() !== user._id.toString()) {
+      throw new ForbiddenException(
+        `You are not authorized to access this resume`,
+      );
+    }
+
+    await this.resumeModel.updateOne(
+      {_id: id},
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email,
+        },
+      },
+    );
+
+    return this.resumeModel.softDelete({_id: id});
   }
 
   async findAll(currentPage: number, limit: number, qs: string, user: IUser) {

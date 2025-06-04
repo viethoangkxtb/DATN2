@@ -31,6 +31,12 @@ export class ResumesController {
     return this.resumesService.findByUsers(user);
   }
 
+  @ResponseMessage('Delete a Resume for User')
+  @Post('withdraw-my-CV/:id')
+  removeForUser(@Param('id') id: string, @User() user: IUser) {
+    return this.resumesService.removeForUser(id, user);
+  }
+
   @ResponseMessage('Fetch all Resumes with pagination')
   @Get()
   findAll(
