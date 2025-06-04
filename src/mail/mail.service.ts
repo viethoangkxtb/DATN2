@@ -23,7 +23,7 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to: data.to,
-        from: data.from, // Thay bằng email của công ty
+        from: '"HR Team" <support@example.com>', // Thay bằng email của công ty
         subject: `Thông báo kết quả tuyển dụng – ${data.companyName}`,
         template: 'approve-resume', // Tên template (interview.hbs)
         context: {
@@ -62,7 +62,7 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to: data.to,
-        from: data.from,
+        from: '"HR Team" <support@example.com>',
         subject: `Thông báo kết quả tuyển dụng – ${data.companyName}`,
         template: 'reject-resume', // Tên file template (không cần .hbs nếu dùng Handlebars)
         context: {

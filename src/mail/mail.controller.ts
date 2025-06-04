@@ -45,6 +45,7 @@ export class MailController {
       if (jobWithMatchingSkills?.length) {
         const jobs = jobWithMatchingSkills.map(item => {
           return {
+            _id: item._id.toString(),
             name: item.name,
             company: item.company.name,
             salary:
@@ -56,7 +57,7 @@ export class MailController {
         await this.mailerService.sendMail({
           to: 'viethoangkxtb@gmail.com',
           from: '"Support Team" <support@example.com>', // override default from
-          subject: 'Welcome to Nice App! Confirm your Email',
+          subject: 'Gợi ý việc làm theo kỹ năng – cập nhật mới nhất',
           template: 'new-job',
           context: {
             receiver: subs.name,
