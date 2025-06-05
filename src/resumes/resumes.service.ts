@@ -1,4 +1,9 @@
-import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {CreateResumeDto, CreateUserCvDto} from './dto/create-resume.dto';
 import {UpdateResumeDto} from './dto/update-resume.dto';
 import {IUser} from 'src/users/users.interface';
@@ -66,14 +71,22 @@ export class ResumesService {
 
   async removeForUser(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Không tìm thấy đơn xin việc với id = ${id}`);
+      throw new BadRequestException(`ID không hợp lệ: ${id}`);
     }
 
     const foundResume = await this.resumeModel.findById(id);
 
+    if (!foundResume) {
+      throw new NotFoundException(`Không tìm thấy đơn xin việc với id = ${id}`);
+    }
+
     if (foundResume.userId.toString() !== user._id.toString()) {
-      throw new ForbiddenException(
-        `Bạn không có quyền xóa đơn xin việc này`,
+      throw new ForbiddenException(`Bạn không có quyền xóa đơn xin việc này`);
+    }
+
+    if (foundResume.status === 'PENDING') {
+      throw new BadRequestException(
+        'Bạn không thể xóa đơn xin việc đã được tiếp nhận',
       );
     }
 
@@ -142,7 +155,9 @@ export class ResumesService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Không tìm thấy đơn xin việc với id = ${id}`);
+      return new BadRequestException(
+        `Không tìm thấy đơn xin việc với id = ${id}`,
+      );
     }
 
     return await this.resumeModel
@@ -152,7 +167,9 @@ export class ResumesService {
 
   async update(_id: string, status: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return new BadRequestException(`Không tìm thấy đơn xin việc với id = ${_id}`);
+      return new BadRequestException(
+        `Không tìm thấy đơn xin việc với id = ${_id}`,
+      );
     }
 
     const updated = await this.resumeModel.updateOne(
@@ -183,7 +200,9 @@ export class ResumesService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Không tìm thấy đơn xin việc với id = ${id}`);
+      return new BadRequestException(
+        `Không tìm thấy đơn xin việc với id = ${id}`,
+      );
     }
 
     await this.resumeModel.updateOne(
