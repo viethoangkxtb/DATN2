@@ -1,5 +1,9 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {CreateUserDto, RegisterUserDto, UpdateForNomalUserDTO} from './dto/create-user.dto';
+import {
+  CreateUserDto,
+  RegisterUserDto,
+  UpdateForNomalUserDTO,
+} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {InjectModel} from '@nestjs/mongoose';
 import {User as UserM, UserDocument} from './schemas/user.schema';
@@ -127,7 +131,9 @@ export class UsersService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Không tìm thấy người dùng với id = ${id}`);
+      return new BadRequestException(
+        `Không tìm thấy người dùng với id = ${id}`,
+      );
     }
 
     return await this.userModel
@@ -152,7 +158,9 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto, user: IUser, _id: string) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return new BadRequestException(`Không tìm thấy người dùng với id = ${_id}`);
+      return new BadRequestException(
+        `Không tìm thấy người dùng với id = ${_id}`,
+      );
     }
 
     const updated = await this.userModel.updateOne(
@@ -169,7 +177,11 @@ export class UsersService {
     return updated;
   }
 
-  async updateForNormal(updateUserDto: UpdateForNomalUserDTO, user: IUser, _id: string) {
+  async updateForNormal(
+    updateUserDto: UpdateForNomalUserDTO,
+    user: IUser,
+    _id: string,
+  ) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
       return new BadRequestException(`Không tìm thấy người dùng với = ${_id}`);
     }
@@ -240,5 +252,9 @@ export class UsersService {
     );
 
     return updated;
+  }
+
+  async countUsers(): Promise<number> {
+    return this.userModel.countDocuments({isDeleted: false});
   }
 }

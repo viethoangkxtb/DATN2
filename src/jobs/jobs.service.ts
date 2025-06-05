@@ -1,4 +1,8 @@
-import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import {CreateJobDto} from './dto/create-job.dto';
 import {UpdateJobDto} from './dto/update-job.dto';
 import {IUser} from 'src/users/users.interface';
@@ -7,7 +11,7 @@ import {Job, JobDocument} from './schemas/job.schema';
 import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
-import { ADMIN_ROLE } from 'src/databases/sample';
+import {ADMIN_ROLE} from 'src/databases/sample';
 
 @Injectable()
 export class JobsService {
@@ -29,9 +33,7 @@ export class JobsService {
     }
 
     if (createJobDto.startDate > createJobDto.endDate) {
-      throw new BadRequestException(
-          'Ngày bắt đầu phải ở trước ngày kết thúc',
-        );
+      throw new BadRequestException('Ngày bắt đầu phải ở trước ngày kết thúc');
     }
 
     let job = await this.jobModel.create({
@@ -159,5 +161,12 @@ export class JobsService {
     );
 
     return this.jobModel.softDelete({_id: id});
+  }
+
+  async countJobs(): Promise<number> {
+    return this.jobModel.countDocuments({
+      isDeleted: false,
+      isActive: true,
+    });
   }
 }

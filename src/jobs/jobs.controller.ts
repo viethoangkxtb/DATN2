@@ -37,6 +37,14 @@ export class JobsController {
     return this.jobsService.findAll(+currentPage, +limit, qs);
   }
 
+  @Public()
+  @ResponseMessage('Get total jobs')
+  @Post('/total')
+  async getTotalJobs() {
+    const total = await this.jobsService.countJobs();
+    return {total};
+  }
+
   @ResponseMessage('Fetch all Jobs with pagination for HR')
   @Post('/hr')
   findAllForHR(

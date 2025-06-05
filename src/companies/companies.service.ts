@@ -118,4 +118,8 @@ export class CompaniesService {
 
     return this.companyModel.softDelete({_id: id});
   }
+
+  async countCompanies(): Promise<number> {
+    return this.companyModel.countDocuments({isDeleted: false});
+  }
 }

@@ -41,6 +41,15 @@ export class UsersController {
     return this.usersService.findAll(+currentPage, +limit, qs);
   }
 
+  
+  @Public()
+  @ResponseMessage('Get total users')
+  @Get('/total')
+  async getTotalUsers() {
+    const total = await this.usersService.countUsers();
+    return {total};
+  }
+
   @Public()
   @ResponseMessage('Fetch User by Id')
   @Get(':id')
@@ -67,7 +76,11 @@ export class UsersController {
     @User() user: IUser,
     @Param('id') id: string,
   ) {
-    let updateUser = await this.usersService.updateForNormal(updateUserDto, user, id);
+    let updateUser = await this.usersService.updateForNormal(
+      updateUserDto,
+      user,
+      id,
+    );
     return updateUser;
   }
 
