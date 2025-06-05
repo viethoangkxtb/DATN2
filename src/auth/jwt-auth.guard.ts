@@ -36,7 +36,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     // You can throw an exception based on either "info" or "err" arguments
     if (err || !user) {
       throw (
-        err || new UnauthorizedException('Invalid token or no token provided!')
+        err || new UnauthorizedException('Token không hợp lệ hoặc không được cung cấp!')
       );
     }
 
@@ -56,7 +56,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     if (!isExist && !isSkipPermission) {
       throw new ForbiddenException(
-        'You do not have perrmission for this endpoint',
+        'Bạn không có quyền truy cập endpoint này',
       );
     }
 

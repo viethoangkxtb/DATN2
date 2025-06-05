@@ -101,7 +101,7 @@ export class MailController {
   }) {
     // console.log('Dữ liệu gửi email:', body);
     await this.mailService.sendInterviewEmail(body);
-    return { message: 'Email sent successfully' };
+    return { message: 'Email chấp nhận đã được gửi thành công' };
   }
 
   @Post('reject-email')
@@ -121,6 +121,6 @@ export class MailController {
   }) {
     
     await this.mailService.sendRejectEmail(body);
-    return { message: 'Reject email sent successfully' };
+    return { message: 'Email từ chối đã được gửi thành công' };
   }
 }

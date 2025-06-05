@@ -22,7 +22,7 @@ export class CompaniesService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Company with name=${name} already exists. Please use another name`,
+        `Công ty với tên: ${name} đã tồn tại. Vui lòng chọn tên khác`,
       );
     }
 
@@ -68,7 +68,7 @@ export class CompaniesService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Company with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công ty với id = ${id}`);
     }
 
     return await this.companyModel.findById(id);
@@ -76,7 +76,7 @@ export class CompaniesService {
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Company with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công ty với id = ${id}`);
     }
 
     const {name} = updateCompanyDto;
@@ -85,7 +85,7 @@ export class CompaniesService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Company with name=${name} already exists. Please use another name`,
+        `Công ty với tên: ${name} đã tồn tại. Vui lòng chọn tên khác`,
       );
     }
 
@@ -103,7 +103,7 @@ export class CompaniesService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Company with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công ty với id = ${id}`);
     }
 
     await this.companyModel.updateOne(

@@ -2,18 +2,18 @@ import {IsArray, IsBoolean, IsMongoId, IsNotEmpty} from 'class-validator';
 import mongoose from 'mongoose';
 
 export class CreateRoleDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'Description is required'})
+  @IsNotEmpty({message: 'Mô tả là bắt buộc'})
   description: string;
 
-  @IsNotEmpty({message: 'IsActive is required'})
+  @IsNotEmpty({message: 'IsActive là bắt buộc'})
   @IsBoolean()
   isActive: boolean;
 
-  @IsNotEmpty({message: 'Permissions is required'})
-  @IsMongoId({each: true, message: 'Each permissions is a mongo object id'})
-  @IsArray({message: 'Permissions is an array'})
+  @IsNotEmpty({message: 'Quyền hạn là bắt buộc'})
+  @IsMongoId({each: true, message: 'Mỗi quyền hạn phải là một mongo object id'})
+  @IsArray({message: 'Quyền hạn là một mảng'})
   permissions: mongoose.Schema.Types.ObjectId[];
 }

@@ -119,7 +119,7 @@ export class JobsService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Job with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công việc với id = ${id}`);
     }
 
     return await this.jobModel.findById(id);
@@ -127,7 +127,7 @@ export class JobsService {
 
   async update(id: string, updateJobDto: UpdateJobDto, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Job with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công việc với id = ${id}`);
     }
 
     const updated = await this.jobModel.updateOne(
@@ -145,7 +145,7 @@ export class JobsService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Job with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy công việc với id = ${id}`);
     }
 
     await this.jobModel.updateOne(

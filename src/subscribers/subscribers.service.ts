@@ -72,7 +72,7 @@ export class SubscribersService {
   }
 
   async findOne(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id)) return `not found subscribers`;
+    if (!mongoose.Types.ObjectId.isValid(id)) return `Không tìm thấy đăng ký với id = ${id}`;
 
     return await this.subscriberModel.findOne({
       _id: id,
@@ -95,7 +95,7 @@ export class SubscribersService {
   }
 
   async remove(id: string, user: IUser) {
-    if (!mongoose.Types.ObjectId.isValid(id)) return `not found subscribers`;
+    if (!mongoose.Types.ObjectId.isValid(id)) return `Không tìm thấy đăng ký với id = ${id}`;
 
     await this.subscriberModel.updateOne(
       {_id: id},

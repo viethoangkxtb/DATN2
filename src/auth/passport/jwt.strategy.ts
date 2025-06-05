@@ -36,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (userTest instanceof BadRequestException) {
       throw userTest;
     }
-    const company = userTest.company || 'You do not in a company';
+    const company = userTest.company || 'Bạn không thuộc công ty nào';
 
     return {
       _id,

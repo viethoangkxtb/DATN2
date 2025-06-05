@@ -11,23 +11,23 @@ import {
 import mongoose from 'mongoose';
 
 class Company {
-  @IsNotEmpty({message: 'Company _id is required'})
+  @IsNotEmpty({message: '_id công ty là bắt buộc'})
   _id: mongoose.Schema.Types.ObjectId;
 
-  @IsNotEmpty({message: 'Company name is required'})
+  @IsNotEmpty({message: 'Tên công ty là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'Company logo is required'})
+  @IsNotEmpty({message: 'Logo công ty là bắt buộc'})
   logo: string;
 }
 
 export class CreateJobDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên công việc là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'Skills are required'})
-  @IsArray({message: 'Skills are an array'})
-  @IsString({each: true, message: 'Skill is a string'})
+  @IsNotEmpty({message: 'Kỹ năng là bắt buộc'})
+  @IsArray({message: 'Các kỹ năng là một mảng'})
+  @IsString({each: true, message: 'Mỗi kỹ năng là một chuỗi'})
   skills: string[];
 
   @IsNotEmptyObject()
@@ -36,31 +36,31 @@ export class CreateJobDto {
   @Type(() => Company)
   company: Company;
 
-  @IsNotEmpty({message: 'Location is required'})
+  @IsNotEmpty({message: 'Vị trí là bắt buộc'})
   location: string;
 
-  @IsNotEmpty({message: 'Salary is required'})
+  @IsNotEmpty({message: 'Lương là bắt buộc'})
   salary: number;
 
-  @IsNotEmpty({message: 'Quantity is required'})
+  @IsNotEmpty({message: 'Số lượng là bắt buộc'})
   quantity: number;
 
-  @IsNotEmpty({message: 'Level is required'})
+  @IsNotEmpty({message: 'Level là bắt buộc'})
   level: string;
 
-  @IsNotEmpty({message: 'Description is required'})
+  @IsNotEmpty({message: 'Mô tả là bắt buộc'})
   description: string;
 
-  @IsNotEmpty({message: 'StartDate is required'})
+  @IsNotEmpty({message: 'Ngày bắt đầu là bắt buộc'})
   @Transform(({value}) => new Date(value))
   @IsDate()
   startDate: Date;
 
-  @IsNotEmpty({message: 'EndDate is required'})
+  @IsNotEmpty({message: 'Ngày kết thúc là bắt buộc'})
   @Transform(({value}) => new Date(value))
   @IsDate()
   endDate: Date;
 
-  @IsNotEmpty({message: 'IsActive is required'})
+  @IsNotEmpty({message: 'IsActive là bắt buộc'})
   isActive: boolean;
 }

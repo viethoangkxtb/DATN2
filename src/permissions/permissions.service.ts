@@ -22,7 +22,7 @@ export class PermissionsService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Permission with ApiPath=${apiPath} and Method=${method} already exists. Please use another Permission`,
+        `Quyền hạn với ApiPath = ${apiPath} và phương thức = ${method} đã tồn tại. Vui lòng chọn quyền hạn khác`,
       );
     }
 
@@ -74,7 +74,7 @@ export class PermissionsService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Permission with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy quyền hạn với id = ${id}`);
     }
 
     return await this.permissionModel.findById(id);
@@ -86,7 +86,7 @@ export class PermissionsService {
     user: IUser,
   ) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found Permission with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy quyền hạn với id = ${id}`);
     }
 
     const {name, apiPath, method, module} = updatePermissionDto;
@@ -95,7 +95,7 @@ export class PermissionsService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Permission with ApiPath=${apiPath} and Method=${method} already exists. Please use another Permission`,
+        `Quyền hạn với ApiPath = ${apiPath} và phương thức = ${method} đã tồn tại. Vui lòng chọn quyền hạn khác`,
       );
     }
 
@@ -117,7 +117,7 @@ export class PermissionsService {
 
   async remove(id: string, user: IUser) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return new BadRequestException(`Not found Permission with id = ${id}`);
+        return new BadRequestException(`Không tìm thấy quyền hạn với id = ${id}`);
       }
   
       await this.permissionModel.updateOne(

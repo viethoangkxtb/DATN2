@@ -1,15 +1,15 @@
 import {IsArray, IsEmail, IsNotEmpty, IsString} from 'class-validator';
 
 export class CreateSubscriberDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'Email is required'})
+  @IsNotEmpty({message: 'Email là bắt buộc'})
   @IsEmail()
   email: string;
 
-  @IsNotEmpty({message: 'Skills are required'})
+  @IsNotEmpty({message: 'Kỹ năng là bắt buộc'})
   @IsArray()
-  @IsString({each: true, message: 'Each skill is a string'})
+  @IsString({each: true, message: 'Mỗi kỹ năng là một chuỗi'})
   skills: string[];
 }

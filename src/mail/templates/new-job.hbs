@@ -59,11 +59,14 @@
                             style='text-decoration: none;'
                           >{{name}}</a>
                         </div>
-                        <div style='font-size: 14px;'>{{company}}</div>
-                        <div style='font-size: 14px;'>{{salary}}</div>
+                        <div style='font-size: 14px;'>Công ty: {{company}}</div>
+                        <div style='font-size: 14px;'>Mức lương: {{salary}}</div>
                         <div>
+                          <span style='font-size: 14px;'>Kỹ năng:</span>
                           {{#each skills}}
-                            <span style='font-size: 14px;'>{{this}}</span>
+                            <span style='font-size: 14px;'>
+                              {{this}}{{#unless @last}}, {{/unless}}
+                            </span>
                           {{/each}}
                         </div>
                         <div

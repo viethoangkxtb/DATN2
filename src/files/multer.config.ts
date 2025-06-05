@@ -72,7 +72,7 @@ export class MulterConfigService implements MulterOptionsFactory {
         if (!isValidFileType) {
           cb(
             new HttpException(
-              'Invalid file type',
+              'Định dạng file tải lên không được hỗ trợ',
               HttpStatus.UNPROCESSABLE_ENTITY,
             ),
             null,
@@ -80,7 +80,7 @@ export class MulterConfigService implements MulterOptionsFactory {
         } else cb(null, true);
       },
       limits: {
-        fileSize: 1024 * 1024 * 5, // 1MB
+        fileSize: 1024 * 1024 * 5, // 5MB
       },
     };
   }

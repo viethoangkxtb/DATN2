@@ -37,7 +37,7 @@ export class UsersService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Email: ${email} already exists. Please use another email`,
+        `Email: ${email} đã tồn tại. Vui lòng chọn email khác`,
       );
     }
 
@@ -68,7 +68,7 @@ export class UsersService {
 
     if (isExist) {
       throw new BadRequestException(
-        `Email: ${email} already exists. Please use another email`,
+        `Email: ${email} đã tồn tại. Vui lòng chọn email khác`,
       );
     }
 
@@ -127,7 +127,7 @@ export class UsersService {
 
   async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new BadRequestException(`Not found User with id = ${id}`);
+      return new BadRequestException(`Không tìm thấy người dùng với id = ${id}`);
     }
 
     return await this.userModel
@@ -152,7 +152,7 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto, user: IUser, _id: string) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return new BadRequestException(`Not found User with id = ${_id}`);
+      return new BadRequestException(`Không tìm thấy người dùng với id = ${_id}`);
     }
 
     const updated = await this.userModel.updateOne(
@@ -171,7 +171,7 @@ export class UsersService {
 
   async updateForNormal(updateUserDto: UpdateForNomalUserDTO, user: IUser, _id: string) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return new BadRequestException(`Not found User with id = ${_id}`);
+      return new BadRequestException(`Không tìm thấy người dùng với = ${_id}`);
     }
 
     const updated = await this.userModel.updateOne(
@@ -190,7 +190,7 @@ export class UsersService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      new BadRequestException(`Not found User with id = ${id}`);
+      new BadRequestException(`Không tìm thấy người dùng với = ${id}`);
     }
 
     const foundUser = await this.userModel.findById(id);
@@ -199,7 +199,7 @@ export class UsersService {
       foundUser &&
       foundUser.email === this.configService.get<string>('ADMIN_ACCOUNT')
     ) {
-      new BadRequestException(`Cannot delete Admin Account`);
+      new BadRequestException(`Không thể xóa Admin Account`);
     }
 
     await this.userModel.updateOne(

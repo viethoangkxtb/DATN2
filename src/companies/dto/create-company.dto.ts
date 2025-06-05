@@ -1,15 +1,15 @@
 import {IsNotEmpty} from 'class-validator';
 
 export class CreateCompanyDto {
-  @IsNotEmpty({message: "Name is required"})
+  @IsNotEmpty({message: "Tên là bắt buộc"})
   name: string;
 
-  @IsNotEmpty({message: "Address is required"})
+  @IsNotEmpty({message: "Địa chỉ là bắt buộc"})
   address: string;
 
-  @IsNotEmpty({message: "Description is required"})
+  @IsNotEmpty({message: "Mô tả là bắt buộc"})
   description: string;
 
-  @IsNotEmpty({message: "Logo is required"})
+  @IsNotEmpty({message: "Logo là bắt buộc"})
   logo: string;
 }

@@ -144,12 +144,12 @@ export class AuthService {
         };
       } else {
         throw new BadRequestException(
-          `Refresh Token invalid, please login again`,
+          `Refresh Token không hợp lệ, vui lòng đăng nhập lại`,
         );
       }
     } catch (error) {
       throw new BadRequestException(
-        `Refresh Token invalid, please login again`,
+        `Refresh Token không hợp lệ, vui lòng đăng nhập lại`,
       );
     }
   };
@@ -157,7 +157,7 @@ export class AuthService {
   logout = async (user: IUser, response: Response) => {
     response.clearCookie('refresh_token');
     await this.usersService.updateUserToken('', user._id);
-    return 'Logged out';
+    return 'Đã đăng xuất';
   };
 
   changePassword = async (
@@ -169,7 +169,7 @@ export class AuthService {
 
     const user = await this.validateUser(username, oldPassword);
     if (!user) {
-      throw new UnauthorizedException('Invalid Password!');
+      throw new UnauthorizedException('Sai mật khẩu!');
     }
 
     const updated = await this.usersService.changePassword(newPassword, currentUser)

@@ -1,15 +1,15 @@
 import {IsNotEmpty} from 'class-validator';
 
 export class CreatePermissionDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'ApiPath is required'})
+  @IsNotEmpty({message: 'ApiPath là bắt buộc'})
   apiPath: string;
 
-  @IsNotEmpty({message: 'Method is required'})
+  @IsNotEmpty({message: 'Phương thức là bắt buộc'})
   method: string;
 
-  @IsNotEmpty({message: 'Module is required'})
+  @IsNotEmpty({message: 'Module là bắt buộc'})
   module: string;
 }

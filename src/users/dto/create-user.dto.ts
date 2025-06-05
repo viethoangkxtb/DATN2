@@ -21,27 +21,27 @@ class Company {
 }
 
 export class CreateUserDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên  là bắt buộclà bắt buộc'})
   name: string;
 
   @IsEmail()
-  @IsNotEmpty({message: 'Email is required'})
+  @IsNotEmpty({message: 'Email là bắt buộc'})
   email: string;
 
-  @IsNotEmpty({message: 'Password is required'})
+  @IsNotEmpty({message: 'Mật khẩu là bắt buộc'})
   password: string;
 
-  @IsNotEmpty({message: 'Age is required'})
+  @IsNotEmpty({message: 'Tuổi là bắt buộc'})
   age: number;
 
-  @IsNotEmpty({message: 'Gender is required'})
+  @IsNotEmpty({message: 'Giới tính là bắt buộc'})
   gender: string;
 
-  @IsNotEmpty({message: 'Address is required'})
+  @IsNotEmpty({message: 'Địa chỉ là bắt buộc'})
   address: string;
 
-  @IsNotEmpty({message: 'Role is required'})
-  @IsMongoId({message: 'Role is a mongo id'})
+  @IsNotEmpty({message: 'Vai trò là bắt buộc'})
+  @IsMongoId({message: 'Vai trò là một mongo id'})
   role: mongoose.Schema.Types.ObjectId;
 
   @IsNotEmptyObject()
@@ -52,23 +52,23 @@ export class CreateUserDto {
 }
 
 export class RegisterUserDto {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên là bắt buộc'})
   name: string;
 
   @IsEmail()
-  @IsNotEmpty({message: 'Email is required'})
+  @IsNotEmpty({message: 'Email là bắt buộc'})
   email: string;
 
-  @IsNotEmpty({message: 'Password is required'})
+  @IsNotEmpty({message: 'Mật khẩu là bắt buộc'})
   password: string;
 
-  @IsNotEmpty({message: 'Age is required'})
+  @IsNotEmpty({message: 'Tuổi là bắt buộc'})
   age: number;
 
-  @IsNotEmpty({message: 'Gender is required'})
+  @IsNotEmpty({message: 'Giới tính là bắt buộc'})
   gender: string;
 
-  @IsNotEmpty({message: 'Address is required'})
+  @IsNotEmpty({message: 'Địa chỉ là bắt buộc'})
   address: number;
 }
 
@@ -82,7 +82,7 @@ export class UserLoginDto {
   @IsNotEmpty()
   @ApiProperty({
       example: '123456',
-      description: 'password',
+      description: 'Mật khẩu',
   })
   readonly password: string;
 }
@@ -98,13 +98,13 @@ export class ChangePasswordDto {
 }
 
 export class UpdateForNomalUserDTO {
-  @IsNotEmpty({message: 'Name is required'})
+  @IsNotEmpty({message: 'Tên là bắt buộc'})
   name: string;
 
-  @IsNotEmpty({message: 'Age is required'})
+  @IsNotEmpty({message: 'Tuổi là bắt buộc'})
   age: number;
 
-  @IsNotEmpty({message: 'Gender is required'})
+  @IsNotEmpty({message: 'Giới tính là bắt buộc'})
   gender: string;
 
   // @IsNotEmpty({message: 'Address is required'})

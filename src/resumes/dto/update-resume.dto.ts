@@ -28,8 +28,8 @@ class History {
 
 
 export class UpdateResumeDto extends PartialType(CreateResumeDto) {
-    @IsNotEmpty({ message: 'History is reqiured', })
-    @IsArray({ message: 'History is an array', })
+    @IsNotEmpty({ message: 'Lịch sử là bắt buộc', })
+    @IsArray({ message: 'Lịch sử là một mảng', })
     @ValidateNested()
     @Type(() => History)
     history: History[];

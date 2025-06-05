@@ -16,8 +16,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
                 // timestamp: new Date().toISOString(),
                 // path: request.url,
 
-                error: "Payload Too Large",
-                message: "File too large, > 1MB",
+                error: "Payload quá lớn",
+                message: "File quá lớn, > 5MB",
                 statusCode: status
 
             });

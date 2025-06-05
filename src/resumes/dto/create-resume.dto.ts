@@ -3,34 +3,34 @@ import mongoose from 'mongoose';
 
 export class CreateResumeDto {
 
-    @IsNotEmpty({ message: 'Email is required', })
+    @IsNotEmpty({ message: 'Email là bắt buộc', })
     email: string;
 
-    @IsNotEmpty({ message: 'UserId is required', })
+    @IsNotEmpty({ message: 'UserId là bắt buộc', })
     userId: mongoose.Schema.Types.ObjectId;
 
-    @IsNotEmpty({ message: 'Url is required', })
+    @IsNotEmpty({ message: 'Url là bắt buộc', })
     url: string;
 
-    @IsNotEmpty({ message: 'Status is required', })
+    @IsNotEmpty({ message: 'Trạng thái là bắt buộc', })
     status: string;
 
-    @IsNotEmpty({ message: 'CompanyId is required', })
+    @IsNotEmpty({ message: 'CompanyId là bắt buộc', })
     companyId: mongoose.Schema.Types.ObjectId;
 
-    @IsNotEmpty({ message: 'JobId is required', })
+    @IsNotEmpty({ message: 'JobId là bắt buộc', })
     jobId: mongoose.Schema.Types.ObjectId;
 }
 
 export class CreateUserCvDto {
-    @IsNotEmpty({ message: 'Url is required', })
+    @IsNotEmpty({ message: 'Url là bắt buộc', })
     url: string;
 
-    @IsNotEmpty({ message: 'CompanyId is required', })
-    @IsMongoId({ message: 'companyId is a mongo id' })
+    @IsNotEmpty({ message: 'CompanyId là bắt buộc', })
+    @IsMongoId({ message: 'companyId phải là mongo id' })
     companyId: mongoose.Schema.Types.ObjectId;
 
-    @IsNotEmpty({ message: 'JobId is required', })
-    @IsMongoId({ message: 'jobId is a mongo id' })
+    @IsNotEmpty({ message: 'JobId là bắt buộc', })
+    @IsMongoId({ message: 'jobId phải là mongo id' })
     jobId: mongoose.Schema.Types.ObjectId;
 }

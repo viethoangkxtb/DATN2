@@ -42,8 +42,8 @@ export class MailService {
       });
       // console.log(`Email sent to ${data.to}`);
     } catch (error) {
-      console.error(`Failed to send email to ${data.to}:`, error);
-      throw new Error('Failed to send email');
+      console.error(`Gửi email chấp nhận thất bại tới ${data.to}:`, error);
+      throw new Error('Gửi email chấp nhận thất bại');
     }
   }
 
@@ -77,8 +77,8 @@ export class MailService {
         },
       });
     } catch (error) {
-      console.error(`Failed to send reject email to ${data.to}:`, error);
-      throw new Error('Failed to send reject email');
+      console.error(`Gửi email từ chối thất bại tới ${data.to}:`, error);
+      throw new Error('Gửi email từ chối thất bại');
     }
   }
 }
