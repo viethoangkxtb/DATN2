@@ -14,7 +14,7 @@ import {IUser} from './users.interface';
 import aqp from 'api-query-params';
 import {ConfigService} from '@nestjs/config';
 import {Role, RoleDocument} from 'src/roles/schemas/role.schema';
-import {USER_ROLE} from 'src/databases/sample';
+import {ADMIN_ROLE, USER_ROLE} from 'src/databases/sample';
 @Injectable()
 export class UsersService {
   constructor(
@@ -93,10 +93,17 @@ export class UsersService {
     return newRegisterUser;
   }
 
-  async findAll(currentPage: number, limit: number, qs: string) {
+  async findAll(currentPage: number, limit: number, qs: string, user: IUser) {
     const {filter, sort, population} = aqp(qs);
     delete filter.current;
     delete filter.pageSize;
+
+    if (user && user.role.name !== ADMIN_ROLE) {
+      const companyId = user.company._id;
+      if (companyId) {
+        filter['company._id'] = companyId;
+      }
+    }
 
     let offset = (+currentPage - 1) * +limit;
     let defaultLimit = +limit ? +limit : 10;

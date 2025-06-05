@@ -37,11 +37,11 @@ export class UsersController {
     @Query('current') currentPage: string,
     @Query('pageSize') limit: string,
     @Query() qs: string,
+    @User() user: IUser,
   ) {
-    return this.usersService.findAll(+currentPage, +limit, qs);
+    return this.usersService.findAll(+currentPage, +limit, qs, user);
   }
 
-  
   @Public()
   @ResponseMessage('Get total users')
   @Get('/total')
