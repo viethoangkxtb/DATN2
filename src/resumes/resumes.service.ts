@@ -84,7 +84,7 @@ export class ResumesService {
       throw new ForbiddenException(`Bạn không có quyền xóa đơn xin việc này`);
     }
 
-    if (foundResume.status === 'PENDING') {
+    if (foundResume.status !== 'PENDING') {
       throw new BadRequestException(
         'Bạn không thể xóa đơn xin việc đã được tiếp nhận',
       );

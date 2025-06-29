@@ -18,8 +18,9 @@ import {DatabasesModule} from './databases/databases.module';
 import {SubscribersModule} from './subscribers/subscribers.module';
 import {MailModule} from './mail/mail.module';
 import {ScheduleModule} from '@nestjs/schedule';
-import {ThrottlerModule} from '@nestjs/throttler';
-import { HealthModule } from './health/health.module';
+import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
+import {HealthModule} from './health/health.module';
+import {FavoriteJobsModule} from './favorite-jobs/favorite-jobs.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { HealthModule } from './health/health.module';
     MailModule,
     ScheduleModule.forRoot(),
     HealthModule,
+    FavoriteJobsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -61,6 +63,10 @@ import { HealthModule } from './health/health.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
