@@ -34,6 +34,17 @@ export class CompaniesController {
     return {total};
   }
 
+  @ResponseMessage('Fetch all Companies with pagination for HR')
+  @Post('/hr')
+  findAllForHR(
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
+    @Query() qs: string,
+    @User() user: IUser,
+  ) {
+    return this.companiesService.findAllForHR(+currentPage, +limit, qs, user);
+  }
+
   @Public()
   @ResponseMessage('Fetch all Companies with pagination')
   @Get()

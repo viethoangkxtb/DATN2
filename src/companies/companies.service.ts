@@ -7,6 +7,7 @@ import {SoftDeleteModel} from 'soft-delete-plugin-mongoose';
 import {IUser} from 'src/users/users.interface';
 import mongoose from 'mongoose';
 import aqp from 'api-query-params';
+import { ADMIN_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class CompaniesService {
@@ -63,6 +64,49 @@ export class CompaniesService {
         total: totalItems, // tổng số phần tử (số bản ghi)
       },
       result, //kết quả query
+    };
+  }
+
+  async findAllForHR(
+    currentPage: number,
+    limit: number,
+    qs: string,
+    user: IUser,
+  ) {
+    const {filter, sort, projection, population} = aqp(qs);
+    delete filter.current;
+    delete filter.pageSize;
+
+    if (user && user.role.name !== ADMIN_ROLE) {
+      // Giả sử chỉ xem được công ty của mình
+      const companyId = user.company?._id;
+      if (companyId) {
+        filter['_id'] = companyId;
+      }
+    }
+
+    const offset = (currentPage - 1) * limit;
+    const defaultLimit = limit ? limit : 10;
+    const totalItems = (await this.companyModel.find(filter)).length;
+    const totalPages = Math.ceil(totalItems / defaultLimit);
+
+    const result = await this.companyModel
+      .find(filter)
+      .skip(offset)
+      .limit(defaultLimit)
+      .sort(sort as any)
+      .populate(population)
+      .select(projection as any)
+      .exec();
+
+    return {
+      meta: {
+        current: currentPage,
+        pageSize: limit,
+        pages: totalPages,
+        total: totalItems,
+      },
+      result,
     };
   }
 
